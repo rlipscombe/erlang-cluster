@@ -4,9 +4,13 @@
 
 start(_StartType, _StartArgs) ->
     Dispatch = cowboy_router:compile([
-        {'_', [{"/", home_handler, []}]}
+        {'_', [
+            {"/", home_handler, []},
+            {"/readyz", readyz_handler, []}
+        ]}
     ]),
-    {ok, _} = cowboy:start_clear(erlclu_listener,
+    {ok, _} = cowboy:start_clear(
+        erlclu_listener,
         [{port, 8080}],
         #{env => #{dispatch => Dispatch}}
     ),

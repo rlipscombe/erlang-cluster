@@ -21,8 +21,16 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: http
+          initialDelaySeconds: 1
+          periodSeconds: 10
+          failureThreshold: 1
         ports:
-        - containerPort: 8080
+        - name: http
+          containerPort: 8080
         env:
         - name: RELEASE_COOKIE # might need to be RELX_COOKIE for some of the 'erlclu' script commands to work.
           valueFrom:
