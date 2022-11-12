@@ -14,36 +14,36 @@ spec:
         app: erlclu
     spec:
       containers:
-      - name: erlclu
-        image: docker.k3s.differentpla.net/erlclu:0.1.0
-        imagePullPolicy: Always
-        resources:
-          limits:
-            memory: "64Mi"
-            cpu: "250m"
-        readinessProbe:
-          httpGet:
-            path: /readyz
-            port: http
-          initialDelaySeconds: 1
-          periodSeconds: 10
-          failureThreshold: 1
-        ports:
-        - name: http
-          containerPort: 8080
-        env:
-        - name: RELEASE_COOKIE # might need to be RELX_COOKIE for some of the 'erlclu' script commands to work.
-          valueFrom:
-            secretKeyRef:
-              name: erlang-cookie
-              key: cookie
-        - name: MY_POD_IP
-          valueFrom:
-            fieldRef:
-              fieldPath: status.podIP
-        volumeMounts:
-          - name: erlclu-dist-tls
-            mountPath: /secrets
+        - name: erlclu
+          image: docker.k3s.differentpla.net/erlclu:0.1.0
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: "250m"
+              memory: "64Mi"
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            initialDelaySeconds: 1
+            periodSeconds: 10
+            failureThreshold: 1
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: RELEASE_COOKIE # might need to be RELX_COOKIE for some of the 'erlclu' script commands to work.
+              valueFrom:
+                secretKeyRef:
+                  name: erlang-cookie
+                  key: cookie
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          volumeMounts:
+            - name: erlclu-dist-tls
+              mountPath: /secrets
       volumes:
         - name: erlclu-dist-tls
           secret:
