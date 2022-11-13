@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: erlclu
+  namespace: erlclu
+  annotations:
+    # Traefik: secure, plz.
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # Ask cert-manager to issue a TLS certificate.
+    cert-manager.io/cluster-issuer: k3s-ca-cluster-issuer
+
+spec:
+  tls:
+  - hosts:
+      - erlclu.k3s.differentpla.net
+    secretName: erlclu-http-tls
+  rules:
+  - host: erlclu.k3s.differentpla.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: erlclu
+            port:
+              name: http
