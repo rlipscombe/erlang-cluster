@@ -1,8 +1,8 @@
 -module(erlclu_cluster).
-
 -export([start_link/0]).
-
 -behaviour(gen_server).
+
+-include_lib("kernel/include/logger.hrl").
 
 -export([
     init/1,
@@ -44,7 +44,9 @@ code_change(_OldVsn, State, _) ->
     {ok, State}.
 
 refresh() ->
+    ?LOG_INFO("Refreshing node list"),
     IPAddresses = inet_res:lookup("erlclu-headless.erlclu.svc.cluster.local", in, a),
+    ?LOG_INFO("Found ~p", [IPAddresses]),
     Nodes =
         [
             erlang:list_to_atom(
@@ -52,5 +54,6 @@ refresh() ->
             )
          || A <- IPAddresses
         ],
-    [net_kernel:connect_node(Node) || Node <- Nodes],
+    Status = [{Node, net_kernel:connect_node(Node)} || Node <- Nodes],
+    ?LOG_INFO("Connection status: ~p", [Status]),
     ok.
