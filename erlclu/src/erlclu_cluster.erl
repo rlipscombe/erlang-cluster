@@ -54,6 +54,6 @@ refresh() ->
             )
          || A <- IPAddresses
         ],
-    Status = [{Node, net_kernel:connect_node(Node)} || Node <- Nodes],
+    Status = [{Node, net_kernel:connect_node(Node)} || Node <- Nodes, Node =/= node()],
     ?LOG_INFO("Connection status: ~p", [Status]),
     ok.
