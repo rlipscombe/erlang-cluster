@@ -5,6 +5,8 @@
 -define(APPLICATION, erlclu).
 
 init(Req0, Opts) ->
+    Nodes = lists:sort([node() | nodes()]),
+
     Priv = code:priv_dir(?APPLICATION),
     {ok, Template} =
         file:read_file(
@@ -17,7 +19,8 @@ init(Req0, Opts) ->
             Template,
             #{
                 node => node(),
-                nodes => lists:sort([node() | nodes()]),
+                nodes => Nodes,
+                node_count => length(Nodes),
                 cookie => erlang:get_cookie()
             },
             [{key_type, atom}]
