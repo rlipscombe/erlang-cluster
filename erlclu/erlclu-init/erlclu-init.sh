@@ -22,15 +22,7 @@ extendedKeyUsage = serverAuth,clientAuth
 DNS = ${MY_POD_IP}
 EOF
 
-# FUCK: cert-manager appears to strip the dirName out.
-# TODO: Let's try having the init container generate the certificates w/o cert-manager.
-# We'll need to put the CA key in the container, or in a secret.
-# Balls.
-# Or, going back to basics: let's try some mTLS between hosts, rather than k8s pods.
-# That'll let us rule out some crap.
-# BUT: I _did_. What's going on? Can I get more logging?
-
-# TODO: Don't bother writing it to a file.
+# TODO: Don't bother writing it to a file?
 openssl req -new \
             -key "$CERTS_DIR/$CERT_FILENAME.key" \
             -subj "/CN=${MY_POD_IP}" \
