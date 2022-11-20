@@ -48,7 +48,7 @@ certificate_requests_base_url="https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_S
 request_name="$(hostname -s)"
 
 cat << EOF | \
-    curl -q -X POST \
+    curl -s -X POST \
         --header "Content-Type: application/json" \
         --header "Authorization: Bearer ${AUTH_TOKEN}" \
         --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
@@ -74,7 +74,7 @@ EOF
 # TODO: Actually *poll* the CertificateRequest.
 sleep 5s
 
-res=$(curl -q \
+res=$(curl -s \
     --header "Accept: application/json" \
     --header "Authorization: Bearer ${AUTH_TOKEN}" \
     --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
