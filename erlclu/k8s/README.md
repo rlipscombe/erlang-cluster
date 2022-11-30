@@ -15,3 +15,10 @@ We need a self-signed server certificate (not going to bother with a CA at this 
     --template server \
     --subject "/CN=inet_tls_dist"
 ```
+
+We need to put it in a secret:
+
+```bash
+kubectl --namespace erlclu create secret tls erlclu-dist-tls \
+  --cert=erlclu-dist-tls.crt --key=erlclu-dist-tls.key
+```
