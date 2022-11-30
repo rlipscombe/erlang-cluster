@@ -1,0 +1,5 @@
+-sname erlclu
+-setcookie ${RELEASE_COOKIE}
+
++K true
++A30
