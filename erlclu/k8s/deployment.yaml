@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: erlclu
+  namespace: erlclu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: erlclu
+  template:
+    metadata:
+      labels:
+        app: erlclu
+    spec:
+      containers:
+      - name: erlclu
+        image: docker.k3s.differentpla.net/erlclu:0.1.0
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
