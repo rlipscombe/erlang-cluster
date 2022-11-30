@@ -24,7 +24,7 @@ spec:
         ports:
         - containerPort: 8080
         env:
-        - name: RELEASE_COOKIE # might need to be RELX_COOKIE for the remote_console to work.
+        - name: RELEASE_COOKIE # might need to be RELX_COOKIE for some of the 'erlclu' script commands to work.
           valueFrom:
             secretKeyRef:
               name: erlang-cookie
