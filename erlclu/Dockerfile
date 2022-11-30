@@ -19,6 +19,8 @@ RUN apk add --no-cache openssl && \
     apk add --no-cache ncurses-libs && \
     apk add --no-cache libstdc++
 
+# BUG: Stop running as root
+
 COPY --from=build /build/_build/prod/rel/erlclu /erlclu
 
 EXPOSE 8080
