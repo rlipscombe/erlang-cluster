@@ -1,4 +1,4 @@
--sname erlclu
+-name erlclu@${MY_POD_IP}
 -setcookie ${RELEASE_COOKIE}
 
 +K true

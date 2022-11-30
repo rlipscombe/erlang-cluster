@@ -1,0 +1,13 @@
+# This file defines the headless service that allows DNS discovery to return all
+# of the pods, rather than the service.
+apiVersion: v1
+kind: Service
+metadata:
+  name: erlclu-headless
+  namespace: erlclu
+spec:
+  selector:
+    app: erlclu
+  # This is what makes it a headless service.
+  type: ClusterIP
+  clusterIP: "None"
