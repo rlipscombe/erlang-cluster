@@ -23,3 +23,9 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 8080
+        env:
+        - name: RELEASE_COOKIE # might need to be RELX_COOKIE for the remote_console to work.
+          valueFrom:
+            secretKeyRef:
+              name: erlang-cookie
+              key: cookie
