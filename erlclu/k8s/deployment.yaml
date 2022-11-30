@@ -29,3 +29,7 @@ spec:
             secretKeyRef:
               name: erlang-cookie
               key: cookie
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
