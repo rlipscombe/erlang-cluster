@@ -41,3 +41,15 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.podIP
+        volumeMounts:
+          - name: erlclu-dist-tls
+            mountPath: /secrets
+      volumes:
+        - name: erlclu-dist-tls
+          secret:
+            secretName: erlclu-dist-tls
+            items:
+              - key: tls.key
+                path: erlclu-dist-tls.key
+              - key: tls.crt
+                path: erlclu-dist-tls.crt
