@@ -1,9 +1,3 @@
-erlclu
-=====
+# erlclu
 
-An OTP application
-
-Build
------
-
-    $ rebar3 compile
+An experiment in Erlang clustering. This is the node that's going to be clustered.
