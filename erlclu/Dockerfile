@@ -22,6 +22,7 @@ RUN apk add --no-cache openssl && \
 # BUG: Stop running as root
 
 COPY --from=build /build/_build/prod/rel/erlclu /erlclu
+ENV HOME /erlclu
 
 EXPOSE 8080
 
