@@ -75,7 +75,7 @@ echo "$res"
 
 # Write the cert and the CA to files.
 echo "$res" | jq -r '.status.ca' | base64 -d > "$CERTS_DIR/ca.crt"
-echo "$res" | jq -r ".status.certificate" | base64 -d > "$CERTS_DIR/$CERT_FILENAME.crt"
+echo "$res" | jq -r '.status.certificate' | base64 -d > "$CERTS_DIR/$CERT_FILENAME.crt"
 
 openssl x509 -in "$CERTS_DIR/$CERT_FILENAME.crt" -text -noout
 openssl x509 -in "$CERTS_DIR/ca.crt" -text -noout
