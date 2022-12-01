@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: erlclu
+  name: erlclu-http
   namespace: erlclu
 spec:
   selector:
