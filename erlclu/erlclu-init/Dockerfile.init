@@ -1,0 +1,8 @@
+FROM docker.io/alpine
+
+RUN apk add --no-cache openssl
+
+WORKDIR /erlclu-init
+COPY erlclu-init.sh erlclu-init.sh
+
+ENTRYPOINT ["/erlclu-init/erlclu-init.sh"]
