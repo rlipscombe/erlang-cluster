@@ -8,7 +8,7 @@ init(Req0, Opts) ->
     Priv = code:priv_dir(?APPLICATION),
     {ok, Template} =
         file:read_file(
-            filename:join([Priv, "index.html"])
+            filename:join([Priv, "web", "index.html"])
         ),
 
     Headers = #{<<"content-type">> => <<"text/html">>},
