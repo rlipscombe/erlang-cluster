@@ -13,10 +13,29 @@ spec:
       labels:
         app: erlclu
     spec:
+      serviceAccountName: erlclu
       initContainers:
         - name: erlclu-init
           image: docker.k3s.differentpla.net/erlclu-init:0.1.0
           imagePullPolicy: Always
+          env:
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: RELEASE_NODE
+              value: erlclu
+            - name: ISSUER_KIND
+              value: ClusterIssuer
+            - name: ISSUER_NAME
+              value: k3s-ca-cluster-issuer
+            - name: CERTS_DIR
+              value: /certs
+            - name: CERT_FILENAME
+              value: tls-dist
+          volumeMounts:
+            - name: tls-dist
+              mountPath: /certs
       containers:
         - name: erlclu
           image: docker.k3s.differentpla.net/erlclu:0.1.0
@@ -49,6 +68,10 @@ spec:
             - name: erlclu-dist-tls
               mountPath: /secrets
       volumes:
+        - name: tls-dist
+          emptyDir:
+            medium: "Memory"
+            sizeLimit: 32Ki
         - name: erlclu-dist-tls
           secret:
             secretName: erlclu-dist-tls
