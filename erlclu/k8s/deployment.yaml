@@ -65,6 +65,10 @@ spec:
             - name: erlclu-dist-tls
               mountPath: /secrets
       volumes:
+        - name: tls-dist
+          emptyDir:
+            medium: "Memory"
+            sizeLimit: 32Ki
         - name: erlclu-dist-tls
           secret:
             secretName: erlclu-dist-tls
