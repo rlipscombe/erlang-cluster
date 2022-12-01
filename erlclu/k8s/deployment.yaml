@@ -33,6 +33,9 @@ spec:
               value: /certs
             - name: CERT_FILENAME
               value: tls-dist
+          volumeMounts:
+            - name: tls-dist
+              mountPath: /certs
       containers:
         - name: erlclu
           image: docker.k3s.differentpla.net/erlclu:0.1.0
