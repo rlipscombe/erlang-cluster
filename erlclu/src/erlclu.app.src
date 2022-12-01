@@ -1,17 +1,17 @@
-{application, erlclu,
- [{description, "An OTP application"},
-  {vsn, "0.1.0"},
-  {registered, []},
-  {mod, {erlclu_app, []}},
-  {applications,
-   [kernel,
-    stdlib,
-    cowboy,
-    bbmustache
-   ]},
-  {env,[]},
-  {modules, []},
+{application, erlclu, [
+    {description, "An OTP application"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {mod, {erlclu_app, []}},
+    {applications, [
+        kernel,
+        stdlib,
+        cowboy,
+        bbmustache
+    ]},
+    {env, []},
+    {modules, []},
 
-  {licenses, ["Apache-2.0"]},
-  {links, []}
- ]}.
+    {licenses, ["Apache-2.0"]},
+    {links, []}
+]}.

@@ -26,9 +26,11 @@ start_link() ->
 %%                  modules => modules()}   % optional
 init([]) ->
     SupFlags =
-        #{strategy => one_for_one,
-          intensity => 0,
-          period => 1},
+        #{
+            strategy => one_for_one,
+            intensity => 0,
+            period => 1
+        },
     ChildSpecs = [#{id => erlclu_cluster, start => {erlclu_cluster, start_link, []}}],
     {ok, {SupFlags, ChildSpecs}}.
 

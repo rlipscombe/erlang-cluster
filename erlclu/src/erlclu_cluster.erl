@@ -4,8 +4,15 @@
 
 -behaviour(gen_server).
 
--export([init/1, handle_call/3, handle_info/2, handle_cast/2, handle_continue/2,
-         terminate/2, code_change/3]).
+-export([
+    init/1,
+    handle_call/3,
+    handle_info/2,
+    handle_cast/2,
+    handle_continue/2,
+    terminate/2,
+    code_change/3
+]).
 
 start_link() ->
     gen_server:start_link(?MODULE, [], []).
@@ -39,8 +46,11 @@ code_change(_OldVsn, State, _) ->
 refresh() ->
     IPAddresses = inet_res:lookup("erlclu-headless.erlclu.svc.cluster.local", in, a),
     Nodes =
-        [erlang:list_to_atom(
-             lists:flatten(["erlclu@", inet:ntoa(A)]))
-         || A <- IPAddresses],
+        [
+            erlang:list_to_atom(
+                lists:flatten(["erlclu@", inet:ntoa(A)])
+            )
+         || A <- IPAddresses
+        ],
     [net_kernel:connect_node(Node) || Node <- Nodes],
     ok.
