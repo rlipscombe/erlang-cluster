@@ -17,6 +17,11 @@ spec:
         - name: erlclu-init
           image: docker.k3s.differentpla.net/erlclu-init:0.1.0
           imagePullPolicy: Always
+          env:
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
       containers:
         - name: erlclu
           image: docker.k3s.differentpla.net/erlclu:0.1.0

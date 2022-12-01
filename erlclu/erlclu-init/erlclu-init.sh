@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo "Hello from $(hostname)"
+echo "Hello from $(MY_POD_IP)"
