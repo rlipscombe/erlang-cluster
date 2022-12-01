@@ -65,8 +65,6 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
           volumeMounts:
-            - name: erlclu-dist-tls
-              mountPath: /secrets
             - name: tls-dist
               mountPath: /certs
       volumes:
@@ -74,11 +72,3 @@ spec:
           emptyDir:
             medium: "Memory"
             sizeLimit: 32Ki
-        - name: erlclu-dist-tls
-          secret:
-            secretName: erlclu-dist-tls
-            items:
-              - key: tls.key
-                path: erlclu-dist-tls.key
-              - key: tls.crt
-                path: erlclu-dist-tls.crt
