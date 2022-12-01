@@ -9,11 +9,3 @@ Because we're using TLS distribution, the default behaviour doesn't work; we'll 
 ```
 kubectl --namespace erlclu exec -it deploy/erlclu -- env "USE_NODETOOL=1" /erlclu/bin/erlclu remote_console
 ```
-
-## Connecting them
-
-```
-IPAddresses = inet_res:lookup("erlclu-headless.erlclu.svc.cluster.local", in, a).
-Nodes = [erlang:list_to_atom(lists:flatten(["erlclu@", inet:ntoa(A)])) || A <- IPAddresses].
-[net_kernel:connect_node(Node) || Node <- Nodes].
-```
