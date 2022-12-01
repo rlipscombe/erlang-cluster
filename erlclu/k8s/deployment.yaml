@@ -23,6 +23,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: RELEASE_NODE
+              value: erlclu
+            - name: ISSUER_KIND
+              value: ClusterIssuer
+            - name: ISSUER_NAME
+              value: k3s-ca-cluster-issuer
+            - name: CERTS_DIR
+              value: /certs
+            - name: CERT_FILENAME
+              value: tls-dist
       containers:
         - name: erlclu
           image: docker.k3s.differentpla.net/erlclu:0.1.0
