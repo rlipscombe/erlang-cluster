@@ -13,6 +13,10 @@ spec:
       labels:
         app: erlclu
     spec:
+      initContainers:
+        - name: erlclu-init
+          image: docker.k3s.differentpla.net/erlclu-init:0.1.0
+          imagePullPolicy: Always
       containers:
         - name: erlclu
           image: docker.k3s.differentpla.net/erlclu:0.1.0
