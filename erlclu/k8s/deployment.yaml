@@ -67,6 +67,8 @@ spec:
           volumeMounts:
             - name: erlclu-dist-tls
               mountPath: /secrets
+            - name: tls-dist
+              mountPath: /certs
       volumes:
         - name: tls-dist
           emptyDir:
