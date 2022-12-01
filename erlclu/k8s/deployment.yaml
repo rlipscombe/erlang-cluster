@@ -26,9 +26,9 @@ spec:
             - name: RELEASE_NODE
               value: erlclu
             - name: ISSUER_KIND
-              value: ClusterIssuer
+              value: Issuer
             - name: ISSUER_NAME
-              value: k3s-ca-cluster-issuer
+              value: erlclu-issuer
             - name: CERTS_DIR
               value: /certs
             - name: CERT_FILENAME
