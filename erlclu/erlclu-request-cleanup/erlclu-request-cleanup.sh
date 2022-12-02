@@ -13,7 +13,7 @@ certificate_requests=$(curl -s -X GET \
         --header "Accept: application/json" \
         --header "Authorization: Bearer ${AUTH_TOKEN}" \
         --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
-        "${certificate_requests_base_url}")
+        "${certificate_requests_base_url}?labelSelector=app=${APPLICATION_LABEL}")
 
 #echo "$certificate_requests"
 

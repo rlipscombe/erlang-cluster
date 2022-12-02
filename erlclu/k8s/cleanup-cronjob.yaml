@@ -17,6 +17,8 @@ spec:
               image: docker.k3s.differentpla.net/erlclu-request-cleanup:0.1.0
               imagePullPolicy: Always
               env:
+                - name: APPLICATION_LABEL
+                  value: erlclu
                 - name: MAX_AGE_MINS
                   value: "15"
           restartPolicy: OnFailure
