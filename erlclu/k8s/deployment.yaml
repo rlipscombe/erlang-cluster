@@ -26,9 +26,9 @@ spec:
             - name: RELEASE_NODE
               value: erlclu
             - name: ISSUER_KIND
-              value: ClusterIssuer
+              value: Issuer
             - name: ISSUER_NAME
-              value: k3s-ca-cluster-issuer
+              value: erlclu-issuer
             - name: CERTS_DIR
               value: /certs
             - name: CERT_FILENAME
@@ -65,18 +65,10 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
           volumeMounts:
-            - name: erlclu-dist-tls
-              mountPath: /secrets
+            - name: tls-dist
+              mountPath: /certs
       volumes:
         - name: tls-dist
           emptyDir:
             medium: "Memory"
             sizeLimit: 32Ki
-        - name: erlclu-dist-tls
-          secret:
-            secretName: erlclu-dist-tls
-            items:
-              - key: tls.key
-                path: erlclu-dist-tls.key
-              - key: tls.crt
-                path: erlclu-dist-tls.crt

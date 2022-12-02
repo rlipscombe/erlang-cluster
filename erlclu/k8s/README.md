@@ -1,24 +1,25 @@
-# Erlang Cookie
+## Erlang Cookie
 
 ```bash
 ERLANG_COOKIE="$(env LC_CTYPE=C tr -dc 'A-Z' < /dev/random | head -c 20)"
 kubectl --namespace erlclu create secret generic erlang-cookie --from-literal=cookie="$ERLANG_COOKIE"
 ```
 
-# TLS Distribution Certificates (for now)
+## CA Key
 
-We need a self-signed server certificate (not going to bother with a CA at this point):
+Note that this is just enough to get it working; I've not considered expiry, usages, whatever. Depending on your
+security policies, you might want to keep a root CA in an HSM and use an intermediate CA.
 
-```bash
-./certs self-signed \
-    --out-cert erlclu-dist-tls.crt --out-key erlclu-dist-tls.key \
-    --template server \
-    --subject "/CN=inet_tls_dist"
+```
+openssl ecparam -name prime256v1 -genkey -noout -out erlclu-ca.key
+openssl req -new -x509 -key erlclu-ca.key -sha256 \
+    -subj "/C=GB/L=London/O=differentpla.net/CN=erlclu CA" -out erlclu-ca.crt
 ```
 
-We need to put it in a secret:
+## CA Secret
 
-```bash
-kubectl --namespace erlclu create secret tls erlclu-dist-tls \
-  --cert=erlclu-dist-tls.crt --key=erlclu-dist-tls.key
+```
+kubectl --namespace erlclu create secret tls erlclu-ca-key-pair \
+    --cert=erlclu-ca.crt \
+    --key=erlclu-ca.key
 ```
