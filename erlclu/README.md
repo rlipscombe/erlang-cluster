@@ -25,3 +25,15 @@ kubectl --namespace erlclu port-forward deployment/erlclu 10022:10022
 ```
 ssh -p 10022 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null localhost
 ```
+
+## Debug container
+
+```
+kubectl --namespace erlclu debug -it erlclu-7d86f49786-trrx8 --image=busybox -- /bin/sh
+
+kubectl --namespace erlclu debug --quiet -i erlclu-7d86f49786-trrx8 \
+    --target=erlclu --image=nicolaka/netshoot -- \
+        tcpdump -i eth0 -s 65535 -w - > dump.pcap
+```
+
+Do NOT include `-t` in `-it`, and DO include `--quiet`, otherwise various human-readable stuff gets written, which confuses wireshark.
