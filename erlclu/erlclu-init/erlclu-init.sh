@@ -53,7 +53,10 @@ cat << EOF | \
     "kind": "CertificateRequest",
     "metadata": {
         "name": "$request_name",
-        "namespace": "$NAMESPACE"
+        "namespace": "$NAMESPACE",
+        "labels": {
+            "app": "$APPLICATION_LABEL"
+        }
     },
     "spec": {
         "request": "$encoded_csr",
