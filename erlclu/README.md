@@ -26,6 +26,19 @@ kubectl --namespace erlclu port-forward deployment/erlclu 10022:10022
 ssh -p 10022 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null localhost
 ```
 
+## Debugging `inet_tls_dist`
+
+With a remote console (e.g. via SSH, above), you can use the following to help diagnose what `inet_tls_dist` is doing.
+It works because `inet_tls_dist` provides a handle do-nothing `trace` function that it calls with useful information.
+You can hook it with `dbg`.
+
+```
+{ok, _} = dbg:start().
+{ok, _} = dbg:tracer(process, {fun(Msg, _) -> io:format("~p\n", [Msg]) end, []}).
+{ok, [{matched, _, 1}]} = dbg:tpl(inet_tls_dist, trace, '_', []).
+{ok, [{matched, _, _}]} = dbg:p(all, c).
+```
+
 ## Debug container
 
 ```
