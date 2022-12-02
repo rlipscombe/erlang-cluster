@@ -10,6 +10,9 @@ Because we're using TLS distribution, the default behaviour doesn't work; we'll 
 kubectl --namespace erlclu exec -it deploy/erlclu -- env "USE_NODETOOL=1" /erlclu/bin/erlclu remote_console
 ```
 
+...but note that it breaks if you've not set `verify_peer`, because it attempts
+to parse stdout. That makes it _really_ hard to debug.
+
 ## Connecting to SSH daemon
 
 ...to use SSH, rather than remote console?
