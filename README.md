@@ -8,3 +8,4 @@ This project demonstrates the following:
 - Automatic clustering between the Erlang nodes, using DNS discovery.
 - Using TLS for Erlang distribution between the nodes.
 - Automatic certificate provisioning using cert-manager.
+- Using Erlang/OTP's SSH daemon for the remote console.
