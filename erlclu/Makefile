@@ -5,6 +5,7 @@ export RELEASE_VSN DOCKER_REGISTRY
 
 all: build-image push-image
 	make -C erlclu-init
+	make -C erlclu-request-cleanup
 
 release:
 	rebar3 as prod release
