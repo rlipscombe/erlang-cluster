@@ -39,6 +39,8 @@ NAMESPACE="$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)"
 certificate_requests_base_url="https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/apis/cert-manager.io/v1/namespaces/${NAMESPACE}/certificaterequests"
 request_name="$(hostname -s)"
 
+# TODO: Eat the output unless the request fails.
+
 cat << EOF | \
     curl -s -X POST \
         --header "Content-Type: application/json" \
@@ -63,15 +65,22 @@ cat << EOF | \
 }
 EOF
 
-# TODO: Actually *poll* the CertificateRequest.
-sleep 5s
+# Give it a chance to complete before we poll it the first time:
+sleep 1s
 
-res=$(curl -s \
-    --header "Accept: application/json" \
-    --header "Authorization: Bearer ${AUTH_TOKEN}" \
-    --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
-    "${certificate_requests_base_url}/$request_name")
-echo "$res"
+for _ in 1 2 3 4 5; do
+    res=$(curl -s \
+        --header "Accept: application/json" \
+        --header "Authorization: Bearer ${AUTH_TOKEN}" \
+        --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
+        "${certificate_requests_base_url}/$request_name")
+    ready_status=$(echo "$res" | jq -r '.status.conditions[] | select(.type == "Ready") | .status')
+    if [ "$ready_status" = "True" ]; then break; fi
+
+    sleep 5s
+done
+
+if [ "$ready_status" != "True" ]; then exit 1; fi
 
 # Write the cert and the CA to files.
 echo "$res" | jq -r '.status.ca' | base64 -d > "$CERTS_DIR/ca.crt"
