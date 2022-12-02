@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: erlclu-request-cleanup
+  namespace: erlclu
+spec:
+  schedule: "8/15 * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: request-cleanup
+              image: docker.k3s.differentpla.net/erlclu-request-cleanup:0.1.0
+              imagePullPolicy: Always
+              env:
+                - name: APPLICATION_LABEL
+                  value: erlclu
+                - name: MAX_AGE_MINS
+                  value: "15"
+          restartPolicy: OnFailure
+          activeDeadlineSeconds: 90
+          serviceAccountName: erlclu

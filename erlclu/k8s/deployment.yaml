@@ -23,6 +23,8 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: APPLICATION_LABEL
+              value: erlclu
             - name: RELEASE_NODE
               value: erlclu
             - name: ISSUER_KIND
