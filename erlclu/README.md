@@ -49,4 +49,20 @@ kubectl --namespace erlclu debug --quiet -i erlclu-7d86f49786-trrx8 \
         tcpdump -i eth0 -s 65535 -w - > dump.pcap
 ```
 
-Do NOT include `-t` in `-it`, and DO include `--quiet`, otherwise various human-readable stuff gets written, which confuses wireshark.
+Do NOT include `-t` in `-it`, and DO include `--quiet`, otherwise various human-readable stuff gets written, which
+confuses Wireshark.
+
+## Caveats
+
+- The certificates expire. When this happens, it may break TLS distribution. The best way to fix this (other than
+  restarting pods) is probably to implement a sidecar that issues a new certificate request before expiry.
+- The SSH host key is stored in a secret and is the same for all pods. We might prefer to generate it in a/the init
+  container. The `ssh` command above ignores the host key, which makes this currently moot.
+- SSH daemon authentication accepts any password; we should use public key auth. This would require synchronising
+  authorized_users somehow.
+- The Erlang runtime doesn't support running as pid 1. Consider shared process namespace or using a lightweight init,
+  such as `tini`.
+- The containers run as 'root'; this needs addressing.
+- Rather than use `imagePullPolicy: Always` (and delete the deployment every time), we should version the created images
+  appropriately.
+- Erlang distribution should probably be restricted with K8s NetworkPolicy.
