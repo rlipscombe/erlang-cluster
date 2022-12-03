@@ -13,9 +13,9 @@ kubectl --namespace erlclu exec -it deploy/erlclu -- env "USE_NODETOOL=1" /erlcl
 ...but note that it breaks if you've not set `verify_peer`, because it attempts
 to parse stdout. That makes it _really_ hard to debug.
 
-## Connecting to SSH daemon
+It takes multiple seconds to connect, so maybe you want to use SSH instead... 
 
-...to use SSH, rather than remote console?
+## Connecting to the SSH daemon
 
 ```
 kubectl --namespace erlclu port-forward pods/erlclu-7d86f49786-qq79w 10022:10022
