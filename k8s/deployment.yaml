@@ -68,11 +68,21 @@ spec:
                   fieldPath: status.podIP
             - name: SSH_SYSTEM_DIR
               value: /erlclu/ssh/system
+            - name: SSH_USER_DIR
+              value: /erlclu/ssh/user
           volumeMounts:
             - name: tls-dist
               mountPath: /certs
+            - name: authorized-keys
+              mountPath: /erlclu/ssh/user
       volumes:
         - name: tls-dist
           emptyDir:
             medium: "Memory"
             sizeLimit: 32Ki
+        - name: authorized-keys
+          configMap:
+            name: authorized-keys-cm
+            items:
+            - key: authorized-keys
+              path: authorized_keys

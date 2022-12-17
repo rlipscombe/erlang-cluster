@@ -8,9 +8,11 @@ start(_StartType, _StartArgs) ->
     ?LOG_INFO("Starting up"),
 
     SystemDir = os:getenv("SSH_SYSTEM_DIR"),
+    UserDir = os:getenv("SSH_USER_DIR"),
     {ok, _} = ssh:daemon(10022, [
         {system_dir, SystemDir},
-        {pwdfun, fun(_User, _Password, _Peer, _State) -> true end}
+        {user_dir, UserDir},
+        {auth_methods, "publickey"}
     ]),
     ?LOG_INFO("SSH listening on port 10022"),
 
