@@ -56,6 +56,8 @@ spec:
           ports:
             - name: http
               containerPort: 8080
+            - name: metrics
+              containerPort: 9153
           env:
             - name: RELEASE_COOKIE # might need to be RELX_COOKIE for some of the 'erlclu' script commands to work.
               valueFrom:
