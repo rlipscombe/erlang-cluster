@@ -1,5 +1,8 @@
 all: build-image push-image
 
+shell:
+	rebar3 shell --sname erlclu
+
 release:
 	rebar3 as prod release
 

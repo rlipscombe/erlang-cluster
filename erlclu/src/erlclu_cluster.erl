@@ -44,9 +44,9 @@ code_change(_OldVsn, State, _) ->
     {ok, State}.
 
 refresh() ->
-    ?LOG_INFO("Refreshing node list"),
+    ?LOG_DEBUG("Refreshing node list"),
     IPAddresses = inet_res:lookup("erlclu-headless.erlclu.svc.cluster.local", in, a),
-    ?LOG_INFO("Found ~p", [IPAddresses]),
+    ?LOG_DEBUG("Found ~p", [IPAddresses]),
     Nodes =
         [
             erlang:list_to_atom(
@@ -55,5 +55,5 @@ refresh() ->
          || A <- IPAddresses
         ],
     Status = [{Node, net_kernel:connect_node(Node)} || Node <- Nodes, Node =/= node()],
-    ?LOG_INFO("Connection status: ~p", [Status]),
+    ?LOG_DEBUG("Connection status: ~p", [Status]),
     ok.
