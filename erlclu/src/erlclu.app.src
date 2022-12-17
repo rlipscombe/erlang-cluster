@@ -1,6 +1,6 @@
 {application, erlclu, [
-    {description, "An OTP application"},
-    {vsn, "0.2.0"},
+    {description, "Demonstrater Erlang clustering in Kubernetes"},
+    {vsn, "0.3.0"},
     {registered, []},
     {mod, {erlclu_app, []}},
     {applications, [
