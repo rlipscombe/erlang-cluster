@@ -1,6 +1,3 @@
 _build/
 Dockerfile
 .dockerignore
-k8s/
-erlclu-init/
-erlclu-request-cleanup/

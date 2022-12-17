@@ -13,14 +13,50 @@ kubectl --namespace erlclu exec -it deploy/erlclu -- env "USE_NODETOOL=1" /erlcl
 ...but note that it breaks if you've not set `verify_peer`, because it attempts
 to parse stdout. That makes it _really_ hard to debug.
 
-It takes multiple seconds to connect, so maybe you want to use SSH instead... 
+It takes multiple seconds to connect, so maybe you want to use SSH instead...
 
 ## Connecting to the SSH daemon
+
+### Add public key to the ConfigMap
+
+The Erlang SSH daemon is configured to use `publickey` authentication. The `authorized_keys` file is managed with a
+ConfigMap.
+
+Get your public key:
+
+```
+cat ~/.ssh/id_rsa.pub
+```
+
+Add it to the ConfigMap:
+
+```
+kubectl --namespace erlclu edit configmap authorized-keys-cm
+```
+
+Edit the `data.authorized-keys` section. It looks something like this:
+
+```
+...
+data:
+  authorized-keys: |
+    ssh-rsa AAAAB3.... user@host
+...
+```
+
+Add the new public key and save the configmap. Wait for a few seconds until it's pushed to the pod, and then log in; see
+below.
+
+### Port Forward
+
+One of the following:
 
 ```
 kubectl --namespace erlclu port-forward pods/erlclu-7d86f49786-qq79w 10022:10022
 kubectl --namespace erlclu port-forward deployment/erlclu 10022:10022
 ```
+
+### Run ssh client
 
 ```
 ssh -p 10022 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null localhost
