@@ -7,14 +7,7 @@
 start(_StartType, _StartArgs) ->
     ?LOG_INFO("Starting up"),
 
-    SystemDir = os:getenv("SSH_SYSTEM_DIR"),
-    UserDir = os:getenv("SSH_USER_DIR"),
-    {ok, _} = ssh:daemon(10022, [
-        {system_dir, SystemDir},
-        {user_dir, UserDir},
-        {auth_methods, "publickey"}
-    ]),
-    ?LOG_INFO("SSH listening on port 10022"),
+    start_ssh_daemon(),
 
     Dispatch = cowboy_router:compile([
         {'_', [
@@ -29,6 +22,21 @@ start(_StartType, _StartArgs) ->
     ),
     ?LOG_INFO("Cowboy listening on port 8080"),
     erlclu_sup:start_link().
+
+start_ssh_daemon() ->
+    SystemDir = os:getenv("SSH_SYSTEM_DIR"),
+    UserDir = os:getenv("SSH_USER_DIR"),
+    start_ssh_daemon(SystemDir, UserDir).
+
+start_ssh_daemon(SystemDir, UserDir) when is_list(SystemDir), is_list(UserDir) ->
+    {ok, _} = ssh:daemon(10022, [
+        {system_dir, SystemDir},
+        {user_dir, UserDir},
+        {auth_methods, "publickey"}
+    ]),
+    ?LOG_INFO("SSH daemon listening on port 10022");
+start_ssh_daemon(_SystemDir, _UserDir) ->
+    ?LOG_WARNING("Not starting SSH daemon").
 
 stop(_State) ->
     ok.
