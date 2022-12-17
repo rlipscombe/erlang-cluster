@@ -1,0 +1,12 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMPodScrape
+metadata:
+  name: erlclu
+  namespace: erlclu
+spec:
+  selector:
+    matchLabels:
+      app: erlclu
+  podMetricsEndpoints:
+  - port: metrics
+    path: /metrics

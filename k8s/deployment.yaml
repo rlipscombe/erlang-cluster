@@ -16,7 +16,7 @@ spec:
       serviceAccountName: erlclu
       initContainers:
         - name: erlclu-init
-          image: docker.k3s.differentpla.net/erlclu-init:0.4.0
+          image: docker.k3s.differentpla.net/erlclu-init:0.4.2
           imagePullPolicy: Always
           env:
             - name: MY_POD_IP
@@ -40,7 +40,7 @@ spec:
               mountPath: /certs
       containers:
         - name: erlclu
-          image: docker.k3s.differentpla.net/erlclu:0.4.0
+          image: docker.k3s.differentpla.net/erlclu:0.4.2
           imagePullPolicy: Always
           resources:
             limits:
@@ -56,6 +56,8 @@ spec:
           ports:
             - name: http
               containerPort: 8080
+            - name: metrics
+              containerPort: 9153
           env:
             - name: RELEASE_COOKIE # might need to be RELX_COOKIE for some of the 'erlclu' script commands to work.
               valueFrom:

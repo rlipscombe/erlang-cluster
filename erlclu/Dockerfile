@@ -26,6 +26,6 @@ COPY /ssh /erlclu/ssh
 
 ENV HOME /erlclu
 
-EXPOSE 8080
+EXPOSE 8080 9153
 
 ENTRYPOINT ["/erlclu/bin/erlclu", "foreground"]
