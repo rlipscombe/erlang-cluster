@@ -66,6 +66,8 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: SSH_SYSTEM_DIR
+              value: /erlclu/ssh/system
           volumeMounts:
             - name: tls-dist
               mountPath: /certs

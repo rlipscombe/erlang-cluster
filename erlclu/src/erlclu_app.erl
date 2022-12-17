@@ -3,12 +3,11 @@
 -export([start/2, stop/1]).
 
 -include_lib("kernel/include/logger.hrl").
--define(APPLICATION, erlclu).
 
 start(_StartType, _StartArgs) ->
     ?LOG_INFO("Starting up"),
 
-    SystemDir = filename:join([code:priv_dir(?APPLICATION), "ssh", "system"]),
+    SystemDir = os:getenv("SSH_SYSTEM_DIR"),
     {ok, _} = ssh:daemon(10022, [
         {system_dir, SystemDir},
         {pwdfun, fun(_User, _Password, _Peer, _State) -> true end}
