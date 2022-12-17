@@ -1,6 +1,6 @@
 {application, erlclu, [
     {description, "Demonstrater Erlang clustering in Kubernetes"},
-    {vsn, "0.4.0"},
+    {vsn, "0.4.2"},
     {registered, []},
     {mod, {erlclu_app, []}},
     {applications, [
