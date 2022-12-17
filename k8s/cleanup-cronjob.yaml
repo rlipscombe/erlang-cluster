@@ -14,7 +14,7 @@ spec:
         spec:
           containers:
             - name: request-cleanup
-              image: docker.k3s.differentpla.net/erlclu-request-cleanup:0.3.0
+              image: docker.k3s.differentpla.net/erlclu-request-cleanup:0.4.0
               imagePullPolicy: Always
               env:
                 - name: APPLICATION_LABEL
