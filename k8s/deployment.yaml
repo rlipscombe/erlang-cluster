@@ -76,11 +76,13 @@ spec:
           volumeMounts:
             - name: tls-dist
               mountPath: /certs
+              readOnly: true
             - name: ssh-host-key
               mountPath: /erlclu/ssh/system
               readOnly: true
             - name: authorized-keys
               mountPath: /erlclu/ssh/user
+              readOnly: true
       volumes:
         - name: tls-dist
           emptyDir:
