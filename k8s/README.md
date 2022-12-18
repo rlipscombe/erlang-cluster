@@ -23,3 +23,12 @@ kubectl --namespace erlclu create secret tls erlclu-ca-key-pair \
     --cert=erlclu-ca.crt \
     --key=erlclu-ca.key
 ```
+
+## SSH host key
+
+```
+ssh-keygen -q -N "" -t rsa -f ssh_host_rsa_key
+kubectl --namespace erlclu create secret generic ssh-host-key \
+        --from-file=ssh_host_rsa_key=ssh_host_rsa_key \
+        --from-file=ssh_host_rsa_key.pub=ssh_host_rsa_key.pub
+```

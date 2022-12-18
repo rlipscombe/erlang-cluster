@@ -38,6 +38,7 @@ spec:
           volumeMounts:
             - name: tls-dist
               mountPath: /certs
+              readOnly: false
       containers:
         - name: erlclu
           image: docker.k3s.differentpla.net/erlclu:0.4.2
@@ -75,13 +76,21 @@ spec:
           volumeMounts:
             - name: tls-dist
               mountPath: /certs
+              readOnly: true
+            - name: ssh-host-key
+              mountPath: /erlclu/ssh/system
+              readOnly: true
             - name: authorized-keys
               mountPath: /erlclu/ssh/user
+              readOnly: true
       volumes:
         - name: tls-dist
           emptyDir:
             medium: "Memory"
             sizeLimit: 32Ki
+        - name: ssh-host-key
+          secret:
+            secretName: ssh-host-key
         - name: authorized-keys
           configMap:
             name: authorized-keys-cm
