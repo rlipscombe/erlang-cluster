@@ -19,12 +19,12 @@ RUN apk add --no-cache openssl && \
     apk add --no-cache ncurses-libs && \
     apk add --no-cache libstdc++
 
-# BUG: Stop running as root
-
 COPY --from=build /build/_build/prod/rel/erlclu /erlclu
 
-ENV HOME /erlclu
+RUN addgroup -g 10000 erlclu && adduser -u 10000 -D -G erlclu -h /erlclu erlclu
+USER erlclu
 
 EXPOSE 8080 9153
 
+ENV HOME /erlclu
 ENTRYPOINT ["/erlclu/bin/erlclu", "foreground"]
