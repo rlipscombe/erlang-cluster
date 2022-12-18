@@ -1,0 +1,8 @@
+case os:getenv("RELEASE_VSN") of
+    false -> CONFIG;
+    Vsn ->
+        {relx, Relx0} = lists:keyfind(relx, 1, CONFIG),
+        {release, {Name, _Vsn}, Apps} = lists:keyfind(release, 1, Relx0),
+        Relx = lists:keyreplace(release, 1, Relx0, {release, {Name, Vsn}, Apps}),
+        lists:keyreplace(relx, 1, CONFIG, {relx, Relx})
+end.

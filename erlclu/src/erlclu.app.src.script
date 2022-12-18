@@ -1,0 +1,10 @@
+case os:getenv("RELEASE_VSN") of
+    false -> throw({missing_env_var, "RELEASE_VSN"});
+    Vsn ->
+        io:format("RELEASE_VSN: ~p~n", [Vsn]),
+        {application, Name, App0} = lists:keyfind(application, 1, CONFIG),
+        App = lists:keyreplace(vsn, 1, App0, {vsn, Vsn}),
+        C = lists:keyreplace(application, 1, CONFIG, {application, Name, App}),
+        io:format("~999p~n", [C]),
+        C
+end.
