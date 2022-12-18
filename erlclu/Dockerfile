@@ -14,6 +14,7 @@ RUN rebar3 as prod release
 
 #
 FROM docker.io/alpine
+ARG RELEASE_VSN
 
 RUN apk add --no-cache openssl && \
     apk add --no-cache ncurses-libs && \
@@ -22,6 +23,7 @@ RUN apk add --no-cache openssl && \
 COPY --from=build /build/_build/prod/rel/erlclu /erlclu
 
 RUN addgroup -g 10000 erlclu && adduser -u 10000 -D -G erlclu -h /erlclu erlclu
+RUN chown -R erlclu.erlclu /erlclu/releases/${RELEASE_VSN}
 USER erlclu
 
 EXPOSE 8080 9153
