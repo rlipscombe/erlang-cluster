@@ -6,6 +6,7 @@
 
 init(Req0, Opts) ->
     Nodes = lists:sort([node() | nodes()]),
+    {ok, Vsn} = application:get_key(?APPLICATION, vsn),
 
     Priv = code:priv_dir(?APPLICATION),
     {ok, Template} =
@@ -21,9 +22,18 @@ init(Req0, Opts) ->
                 node => node(),
                 nodes => Nodes,
                 node_count => length(Nodes),
-                cookie => erlang:get_cookie()
+                application_vsn => Vsn,
+                cookie => erlang:get_cookie(),
+                uptime => uptime()
             },
             [{key_type, atom}]
         ),
     Req = cowboy_req:reply(200, Headers, Body, Req0),
     {ok, Req, Opts}.
+
+uptime() ->
+    UptimeNative = erlang:monotonic_time() - erlang:system_info(start_time),
+    UptimeSecs = erlang:convert_time_unit(UptimeNative, native, seconds),
+    {D, {H, M, S}} = calendar:seconds_to_daystime(UptimeSecs),
+    list_to_binary(
+        io_lib:format("~pd, ~p:~p:~p", [D, H, M, S])).

@@ -8,12 +8,20 @@
 </head>
 <body>
     <h1>{{ node }}</h1>
+
     <h2>{{ node_count }} nodes</h2>
     <ul>
         {{#nodes}}
         <li>{{.}}</li>
         {{/nodes}}
     </ul>
+
+    <h2>Version</h2>
+    <p>{{application_vsn}}</p>
+
+    <h2>Uptime</h2>
+    <p>{{uptime}}</p>
+
     <h2>Cookie</h2>
     <pre>{{cookie}}</pre>
 </body>
