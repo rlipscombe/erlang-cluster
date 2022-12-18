@@ -100,8 +100,6 @@ confuses Wireshark.
   restarting pods) is probably to implement a sidecar that issues a new certificate request before expiry.
 - The SSH host key is stored in a secret and is the same for all pods. We might prefer to generate it in a/the init
   container. The `ssh` command above ignores the host key, which makes this currently moot.
-- The Erlang runtime doesn't support running as pid 1. Consider shared process namespace or using a lightweight init,
-  such as `tini`.
 - Rather than use `imagePullPolicy: Always` (and delete the deployment every time), we should version the created images
   appropriately.
 - Erlang distribution should probably be restricted with K8s NetworkPolicy.
