@@ -75,6 +75,8 @@ spec:
           volumeMounts:
             - name: tls-dist
               mountPath: /certs
+            - name: ssh-host-key
+              mountPath: /erlclu/ssh/system
             - name: authorized-keys
               mountPath: /erlclu/ssh/user
       volumes:
@@ -82,6 +84,14 @@ spec:
           emptyDir:
             medium: "Memory"
             sizeLimit: 32Ki
+        - name: ssh-host-key
+          secret:
+            name: ssh-host-key
+            items:
+            - key: ssh_host_rsa_key
+              path: ssh_host_rsa_key
+            - key: ssh_host_rsa_key.pub
+              path: ssh_host_rsa_key.pub
         - name: authorized-keys
           configMap:
             name: authorized-keys-cm
