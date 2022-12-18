@@ -77,6 +77,7 @@ spec:
               mountPath: /certs
             - name: ssh-host-key
               mountPath: /erlclu/ssh/system
+              readOnly: true
             - name: authorized-keys
               mountPath: /erlclu/ssh/user
       volumes:
@@ -86,12 +87,7 @@ spec:
             sizeLimit: 32Ki
         - name: ssh-host-key
           secret:
-            name: ssh-host-key
-            items:
-            - key: ssh_host_rsa_key
-              path: ssh_host_rsa_key
-            - key: ssh_host_rsa_key.pub
-              path: ssh_host_rsa_key.pub
+            secretName: ssh-host-key
         - name: authorized-keys
           configMap:
             name: authorized-keys-cm
