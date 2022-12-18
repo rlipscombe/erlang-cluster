@@ -4,7 +4,11 @@
  {<<"cowlib">>,{pkg,<<"cowlib">>,<<"2.11.0">>},1},
  {<<"prometheus">>,{pkg,<<"prometheus">>,<<"4.9.1">>},0},
  {<<"quantile_estimator">>,{pkg,<<"quantile_estimator">>,<<"0.2.1">>},1},
- {<<"ranch">>,{pkg,<<"ranch">>,<<"1.8.0">>},1}]}.
+ {<<"ranch">>,{pkg,<<"ranch">>,<<"1.8.0">>},1},
+ {<<"vsn_transform">>,
+  {git,"https://github.com/rlipscombe/vsn_transform.git",
+       {ref,"97728dcad53474754e5180cb7db360e5db2cafd5"}},
+  0}]}.
 [
 {pkg_hash,[
  {<<"bbmustache">>, <<"0CABDCE0DB9FE6D3318131174B9F2B351328A4C0AFBEB3E6E99BB0E02E9B621D">>},
