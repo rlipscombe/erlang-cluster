@@ -1,8 +1,14 @@
 case os:getenv("RELEASE_VSN") of
     false -> CONFIG;
     Vsn ->
-        {relx, Relx0} = lists:keyfind(relx, 1, CONFIG),
+        % Update vsn_transform opts
+        {erl_opts, Opts0} = lists:keyfind(erl_opts, 1, CONFIG),
+        Opts = lists:keystore(vsn, 1, Opts0, {vsn, Vsn}),
+        CONFIG2 = lists:keyreplace(erl_opts, 1, CONFIG, {erl_opts, Opts}),
+
+        % Update release version
+        {relx, Relx0} = lists:keyfind(relx, 1, CONFIG2),
         {release, {Name, _Vsn}, Apps} = lists:keyfind(release, 1, Relx0),
         Relx = lists:keyreplace(release, 1, Relx0, {release, {Name, Vsn}, Apps}),
-        lists:keyreplace(relx, 1, CONFIG, {relx, Relx})
+        lists:keyreplace(relx, 1, CONFIG2, {relx, Relx})
 end.
