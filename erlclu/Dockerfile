@@ -10,11 +10,13 @@ RUN rebar3 compile --deps_only
 
 # Copy the rest and compile it
 COPY . .
+
+# We need RELEASE_VSN for the rebar scripts
+ARG RELEASE_VSN
 RUN rebar3 as prod release
 
 #
 FROM docker.io/alpine
-ARG RELEASE_VSN
 
 RUN apk add --no-cache openssl && \
     apk add --no-cache ncurses-libs && \
