@@ -1,5 +1,6 @@
 FROM docker.io/erlang:25.1.2.0-alpine AS build
 
+# We need git for rebar3 get-deps.
 RUN apk add --no-cache git
 
 WORKDIR /build
@@ -14,24 +15,28 @@ RUN rebar3 compile --deps_only
 # Copy the rest and compile it
 COPY . .
 
-# We need RELEASE_VSN for the rebar scripts
+# We need RELEASE_VSN for rebar.config.script, etc.
 ARG RELEASE_VSN
 RUN rebar3 as prod release
 
-#
+####
 FROM docker.io/alpine
 
 RUN apk add --no-cache openssl && \
     apk add --no-cache ncurses-libs && \
     apk add --no-cache libstdc++
 
+# Use 'tini' to avoid Erlang running as PID 0.
+RUN apk add --no-cache tini
+
 COPY --from=build /build/_build/prod/rel/erlclu /erlclu
 
 RUN addgroup -g 10000 erlclu && adduser -u 10000 -D -G erlclu -h /erlclu erlclu
 RUN chown -R erlclu.erlclu /erlclu/releases/${RELEASE_VSN}
 USER erlclu
+ENV HOME /erlclu
 
 EXPOSE 8080 9153
 
-ENV HOME /erlclu
-ENTRYPOINT ["/erlclu/bin/erlclu", "foreground"]
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["/erlclu/bin/erlclu", "foreground"]
