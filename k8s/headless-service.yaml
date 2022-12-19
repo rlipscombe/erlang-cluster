@@ -8,6 +8,6 @@ metadata:
 spec:
   selector:
     app: erlclu
-  # This is what makes it a headless service.
+  # Explicitly setting clusterIP: "None" is what makes it a headless service.
   type: ClusterIP
   clusterIP: "None"
