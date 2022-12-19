@@ -59,6 +59,7 @@ spec:
             initialDelaySeconds: 1
             periodSeconds: 10
             failureThreshold: 1
+            # TODO: https://azure.github.io/application-gateway-kubernetes-ingress/how-tos/minimize-downtime-during-deployments/
           ports:
             - name: http
               containerPort: 8080
