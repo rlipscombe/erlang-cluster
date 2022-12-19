@@ -46,6 +46,11 @@ code_change(_OldVsn, State, _) ->
 
 refresh() ->
     ?LOG_DEBUG("Refreshing node list"),
+    % TODO: Make this configurable.
+    % The service name can't be discovered, so that'll have to be in an environment variable.
+    % Question: how to discover the namespace? It's in /var/run/secrets/kubernetes.io/serviceaccount/namespace, but I'd prefer using `metadata.namespace` in the downward API.
+    % Question: how to discover the cluster name? It's in resolv.conf, in the search directive. nslookup will honour this. dig doesn't. Will inet_res?
+    % Alternatively: if we weren't using K8s, we'd just specify the whole thing in a single environment variable.
     IPAddresses = inet_res:lookup("erlclu-headless.erlclu.svc.cluster.local", in, a),
     ?LOG_DEBUG("Found ~p", [IPAddresses]),
     Nodes =
