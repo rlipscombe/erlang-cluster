@@ -1,6 +1,7 @@
 -name erlclu@${MY_POD_IP}
 -setcookie ${RELEASE_COOKIE}
 
+% todo: if we used a custom dist (CouchDB does this), we wouldn't need the SSH daemon, or this nasty hack. That is: erl_call would work.
 -proto_dist inet_tls -ssl_dist_optfile ${ROOTDIR}/inet_tls_dist.config
 
 +K true
