@@ -12,6 +12,7 @@ metadata:
     cert-manager.io/cluster-issuer: k3s-ca-cluster-issuer
 
 spec:
+  # TODO: http->https redirects?
   tls:
   - hosts:
       - erlclu.k3s.differentpla.net
