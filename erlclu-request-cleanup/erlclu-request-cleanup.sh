@@ -7,6 +7,7 @@ expiry=$(date --date="${MAX_AGE_MINS} minutes ago" --utc +"%Y-%m-%dT%H:%M:%SZ")
 AUTH_TOKEN="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"
 NAMESPACE="$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)"
 
+# TODO: The blog has this (and cabundle) shortened. Lift that, for consistency.
 certificate_requests_base_url="https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/apis/cert-manager.io/v1/namespaces/${NAMESPACE}/certificaterequests"
 
 certificate_requests=$(curl -s -X GET \
