@@ -24,4 +24,6 @@ This project demonstrates the following:
 2. Update `RELEASE_VSN` in the top-level Makefile.
 3. Run `make` at the top-level. This will build and push the container images.
 4. Update the image tags in the `k8s/` directory.
-5. `kubectl apply -f k8s/`
+5. Either:
+   - `kubectl apply -f k8s/`
+   - `argocd app sync erlang-cluster`
