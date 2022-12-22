@@ -1,5 +1,6 @@
 case os:getenv("RELEASE_VSN") of
-    false -> CONFIG;
+    false -> throw({unset_env_var, "RELEASE_VSN"});
+    "" -> throw({empty_env_var, "RELEASE_VSN"});
     Vsn ->
         % Update vsn_transform opts
         {erl_opts, Opts0} = lists:keyfind(erl_opts, 1, CONFIG),
