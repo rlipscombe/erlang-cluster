@@ -17,3 +17,11 @@ This project demonstrates the following:
 - `erlclu-request-cleanup`: cron job that cleans up completed/stale certificate
   requests.
 - `k8s`: Kubernetes manifests.
+
+## Deploying it
+
+1. Hack hack hack.
+2. Update `RELEASE_VSN` in the top-level Makefile.
+3. Run `make` at the top-level. This will build and push the container images.
+4. Update the image tags in the `k8s/` directory.
+5. `kubectl apply -f k8s/`
