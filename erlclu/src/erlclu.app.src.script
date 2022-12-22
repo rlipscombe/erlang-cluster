@@ -1,6 +1,6 @@
 case os:getenv("RELEASE_VSN") of
     false -> throw({unset_env_var, "RELEASE_VSN"});
-    [] -> throw({empty_env_var, "RELEASE_VSN"});
+    "" -> throw({empty_env_var, "RELEASE_VSN"});
     Vsn ->
         {application, Name, App0} = lists:keyfind(application, 1, CONFIG),
         App = lists:keyreplace(vsn, 1, App0, {vsn, Vsn}),
