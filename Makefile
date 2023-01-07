@@ -1,4 +1,4 @@
-RELEASE_VSN ?= 0.10.0
+RELEASE_VSN ?= 0.10.1
 DOCKER_REGISTRY ?= docker.k3s.differentpla.net
 
 export RELEASE_VSN DOCKER_REGISTRY
