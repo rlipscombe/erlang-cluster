@@ -18,7 +18,7 @@ start_link() ->
     gen_server:start_link(?MODULE, [], []).
 
 init([]) ->
-    prometheus_gauge:new([{name, connected_node_count}, {help, "Connected node count"}]),
+    prometheus_gauge:new([{name, connected_node_count}, {labels, [node]}, {help, "Connected node count"}]),
     {ok, undefined, {continue, undefined}}.
 
 handle_continue(_, State) ->
@@ -57,5 +57,5 @@ refresh() ->
         ],
     Status = [{Node, net_kernel:connect_node(Node)} || Node <- Nodes, Node =/= node()],
     ?LOG_DEBUG("Connection status: ~p", [Status]),
-    prometheus_gauge:set(connected_node_count, length(nodes()) + 1),
+    prometheus_gauge:set(connected_node_count, [{node, node()}], length(nodes()) + 1),
     ok.
