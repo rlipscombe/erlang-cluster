@@ -57,5 +57,5 @@ refresh() ->
         ],
     Status = [{Node, net_kernel:connect_node(Node)} || Node <- Nodes, Node =/= node()],
     ?LOG_DEBUG("Connection status: ~p", [Status]),
-    prometheus_gauge:set(connected_node_count, [{node, node()}], length(nodes()) + 1),
+    prometheus_gauge:set(connected_node_count, [node()], length(nodes()) + 1),
     ok.
