@@ -4,7 +4,7 @@ metadata:
   name: erlclu
   namespace: erlclu
 spec:
-  replicas: 5
+  replicas: 7
   revisionHistoryLimit: 3
   selector:
     matchLabels:
