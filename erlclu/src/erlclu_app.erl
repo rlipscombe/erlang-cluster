@@ -23,7 +23,8 @@ start_ssh_daemon(SystemDir, UserDir) when is_list(SystemDir), is_list(UserDir) -
         {system_dir, SystemDir},
         {user_dir, UserDir},
         {auth_methods, "publickey"},
-        {tcpip_tunnel_out, true}
+        {tcpip_tunnel_out, true},
+        {tcpip_tunnel_in, true}
     ]),
     ?LOG_INFO("SSH daemon listening on port 10022");
 start_ssh_daemon(_SystemDir, _UserDir) ->
