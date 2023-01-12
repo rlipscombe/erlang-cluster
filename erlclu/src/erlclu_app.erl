@@ -18,6 +18,18 @@ start(_StartType, _StartArgs) ->
         []
     ),
 
+    ok = telemetry:attach_many(
+        <<"cowboy-telemetry">>,
+        [
+            [cowboy, request, start],
+            [cowboy, request, stop],
+            [cowboy, request, exception],
+            [cowboy, request, early_error]
+        ],
+        fun handle_telemetry_event/4,
+        []
+    ),
+
     erlclu_sup:start_link().
 
 handle_telemetry_event(Event, Measurements, Metadata, Config) ->
@@ -50,7 +62,10 @@ start_http_listener() ->
     {ok, _} = cowboy:start_clear(
         erlclu_listener,
         [{port, 8080}],
-        #{env => #{dispatch => Dispatch}}
+        #{
+            env => #{dispatch => Dispatch},
+            stream_handlers => [cowboy_telemetry_h, cowboy_stream_h]
+        }
     ),
     ?LOG_INFO("Cowboy listening on port 8080"),
     ok.
