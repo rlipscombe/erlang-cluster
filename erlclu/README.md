@@ -2,6 +2,13 @@
 
 An experiment in Erlang clustering. This is the node that's going to be clustered.
 
+## Running it locally
+
+```sh
+make release
+make console
+```
+
 ## Remote Console
 
 Because we're using TLS distribution, the default behaviour doesn't work; we'll need to use 'nodetool'.
