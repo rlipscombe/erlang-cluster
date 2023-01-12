@@ -7,3 +7,6 @@ all:
 	make -C erlclu
 	make -C erlclu-init
 	make -C erlclu-request-cleanup
+
+release:
+	make -C erlclu release

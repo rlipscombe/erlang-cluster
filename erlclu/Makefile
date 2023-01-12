@@ -1,3 +1,7 @@
+RELEASE_VSN ?= dev
+
+export RELEASE_VSN
+
 all: build-image push-image
 
 shell:
