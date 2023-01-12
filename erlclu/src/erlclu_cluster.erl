@@ -18,7 +18,9 @@ start_link() ->
     gen_server:start_link(?MODULE, [], []).
 
 init([]) ->
-    prometheus_gauge:new([{name, connected_node_count}, {labels, [node]}, {help, "Connected node count"}]),
+    prometheus_gauge:new([
+        {name, connected_node_count}, {labels, [node]}, {help, "Connected node count"}
+    ]),
     {ok, undefined, {continue, undefined}}.
 
 handle_continue(_, State) ->

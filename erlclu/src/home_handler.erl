@@ -36,4 +36,5 @@ uptime() ->
     UptimeSecs = erlang:convert_time_unit(UptimeNative, native, seconds),
     {D, {H, M, S}} = calendar:seconds_to_daystime(UptimeSecs),
     list_to_binary(
-        io_lib:format("~Bd, ~Bh~Bm~Bs", [D, H, M, S])).
+        io_lib:format("~Bd, ~Bh~Bm~Bs", [D, H, M, S])
+    ).
