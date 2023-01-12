@@ -10,6 +10,7 @@
         cowboy,
         bbmustache,
         prometheus,
+        cowboy_telemetry,
         telemetry
     ]},
     {env, []},
