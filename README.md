@@ -20,8 +20,9 @@ This project demonstrates the following:
 
 ## Deploying it
 
-1. Hack hack hack.
-2. Update `RELEASE_VSN` in the top-level Makefile.
+1. Update `RELEASE_VSN` in the top-level Makefile. Do this first, otherwise `make` will overwrite the current container
+   image, which might break things if a pod gets deployed.
+2. Hack hack hack.
 3. Run `make` at the top-level. This will build and push the container images.
 4. Update the image tags in the `k8s/` directory.
 5. Either:
