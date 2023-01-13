@@ -13,6 +13,10 @@ release:
 console:
 	MY_POD_IP=$(shell hostname) RELEASE_COOKIE=cookie ./_build/prod/rel/erlclu/bin/erlclu console
 
+# Can't connect because /certs doesn't exist; so no TLS.
+remote:
+	MY_POD_IP=$(shell hostname) RELEASE_COOKIE=cookie ./_build/prod/rel/erlclu/bin/erlclu remote
+
 build-image:
 	podman build -f Dockerfile --build-arg RELEASE_VSN=$(RELEASE_VSN) -t erlclu
 
