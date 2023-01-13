@@ -59,5 +59,7 @@ refresh() ->
         ],
     Status = [{Node, net_kernel:connect_node(Node)} || Node <- Nodes, Node =/= node()],
     ?LOG_DEBUG("Connection status: ~p", [Status]),
-    prometheus_gauge:set(connected_node_count, [node()], length(nodes()) + 1),
+    Count = length(nodes()) + 1,
+    prometheus_gauge:set(connected_node_count, [node()], Count),
+    telemetry:execute([cluster, connected_nodes], #{count => Count}, #{node => node()}),
     ok.
