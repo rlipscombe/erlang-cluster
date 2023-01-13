@@ -9,7 +9,8 @@
         ssh,
         cowboy,
         bbmustache,
-        prometheus
+        prometheus,
+        telemetry
     ]},
     {env, []},
     {modules, []},
