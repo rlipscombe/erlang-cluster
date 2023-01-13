@@ -11,7 +11,19 @@ start(_StartType, _StartArgs) ->
     start_http_listener(),
     start_prometheus_listener(),
 
+    ok = telemetry:attach(
+        <<"cluster-telemetry">>,
+        [cluster, connected_nodes],
+        fun handle_telemetry_event/4,
+        []
+    ),
+
     erlclu_sup:start_link().
+
+handle_telemetry_event(Event, Measurements, Metadata, Config) ->
+    ?LOG_INFO(#{
+        event => Event, measurements => Measurements, metadata => Metadata, config => Config
+    }).
 
 start_ssh_daemon() ->
     SystemDir = os:getenv("SSH_SYSTEM_DIR"),
