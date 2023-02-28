@@ -14,18 +14,19 @@ start(_StartType, _StartArgs) ->
     erlclu_sup:start_link().
 
 start_ssh_daemon() ->
+    Port = list_to_integer(os:getenv("SSH_PORT", "22")),
     SystemDir = os:getenv("SSH_SYSTEM_DIR"),
     UserDir = os:getenv("SSH_USER_DIR"),
-    start_ssh_daemon(SystemDir, UserDir).
+    start_ssh_daemon(Port, SystemDir, UserDir).
 
-start_ssh_daemon(SystemDir, UserDir) when is_list(SystemDir), is_list(UserDir) ->
-    {ok, _} = ssh:daemon(10022, [
+start_ssh_daemon(Port, SystemDir, UserDir) when is_integer(Port), is_list(SystemDir), is_list(UserDir) ->
+    {ok, _} = ssh:daemon(Port, [
         {system_dir, SystemDir},
         {user_dir, UserDir},
         {auth_methods, "publickey"}
     ]),
-    ?LOG_INFO("SSH daemon listening on port 10022");
-start_ssh_daemon(_SystemDir, _UserDir) ->
+    ?LOG_INFO("SSH daemon listening on port ~B", [Port]);
+start_ssh_daemon(_Port, _SystemDir, _UserDir) ->
     ?LOG_WARNING("Not starting SSH daemon").
 
 start_http_listener() ->

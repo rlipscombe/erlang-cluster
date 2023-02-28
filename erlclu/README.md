@@ -59,8 +59,8 @@ below.
 One of the following:
 
 ```
-kubectl --namespace erlclu port-forward pods/erlclu-7d86f49786-qq79w 10022:10022
-kubectl --namespace erlclu port-forward deployment/erlclu 10022:10022
+kubectl --namespace erlclu port-forward pods/erlclu-7d86f49786-qq79w 10022:22
+kubectl --namespace erlclu port-forward deployment/erlclu 10022:22
 ```
 
 ### Run ssh client
