@@ -21,7 +21,7 @@ spec:
       serviceAccountName: erlclu
       initContainers:
         - name: erlclu-init
-          image: docker.k3s.differentpla.net/erlclu-init:0.10.3
+          image: docker.k3s.differentpla.net/erlclu-init:0.10.4
           imagePullPolicy: Always
           env:
             - name: MY_POD_IP
@@ -46,7 +46,7 @@ spec:
               readOnly: false
       containers:
         - name: erlclu
-          image: docker.k3s.differentpla.net/erlclu:0.10.3
+          image: docker.k3s.differentpla.net/erlclu:0.10.4
           imagePullPolicy: Always
           resources:
             limits:
