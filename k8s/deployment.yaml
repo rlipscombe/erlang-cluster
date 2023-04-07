@@ -37,12 +37,12 @@ spec:
             - name: ISSUER_NAME
               value: erlclu-issuer
             - name: CERTS_DIR
-              value: /certs
+              value: /certs/my
             - name: CERT_FILENAME
               value: tls-dist
           volumeMounts:
             - name: tls-dist
-              mountPath: /certs
+              mountPath: /certs/my
               readOnly: false
       containers:
         - name: erlclu
@@ -82,8 +82,10 @@ spec:
               value: /erlclu/ssh/user
           volumeMounts:
             - name: tls-dist
-              mountPath: /certs
+              mountPath: /certs/my
               readOnly: true
+            - name: erlclu-ca-certificates
+              mountPath: /certs/ca
             - name: ssh-host-key
               mountPath: /erlclu/ssh/system
               readOnly: true
@@ -98,6 +100,9 @@ spec:
         - name: ssh-host-key
           secret:
             secretName: ssh-host-key
+        - name: erlclu-ca-certificates
+          secret:
+            secretName: erlclu-ca-certificates
         - name: authorized-keys
           configMap:
             name: authorized-keys-cm
