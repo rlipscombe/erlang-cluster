@@ -1,4 +1,4 @@
-FROM docker.io/alpine
+FROM docker.io/alpine:3.17.3
 
 # We need coreutils for a version of 'date' that can do --date '15 minutes ago'.
 # We need curl and jq to access the Kubernetes API and to parse the responses.

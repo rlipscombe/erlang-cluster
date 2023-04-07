@@ -85,8 +85,7 @@ done
 
 if [ "$ready_status" != "True" ]; then exit 1; fi
 
-# Write the cert and the CA to files.
-echo "$res" | jq -r '.status.ca' | base64 -d > "$CERTS_DIR/ca.crt"
+# Write the generated cert to a file. The trusted CA certs are managed elsewhere.
 echo "$res" | jq -r '.status.certificate' | base64 -d > "$CERTS_DIR/$CERT_FILENAME.crt"
 
 #openssl x509 -in "$CERTS_DIR/$CERT_FILENAME.crt" -text -noout
