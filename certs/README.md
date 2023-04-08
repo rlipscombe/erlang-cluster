@@ -78,3 +78,7 @@ kubectl --namespace erlclu create secret tls erlclu-ca-key-pair \
     --cert=erlclu-ca-$cert_timestamp.crt \
     --key=erlclu-ca-$cert_timestamp.key
 ```
+
+Note that it takes a short while for the updated `erlclu-ca-certificates` secret to be deployed. If you scale up the
+deployment before this is complete, you'll get two distinct clusters. This is temporary; it resolves itself after a few
+minutes.
