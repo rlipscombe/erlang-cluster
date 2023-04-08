@@ -40,12 +40,12 @@ kubectl --namespace erlclu create secret generic erlclu-ca-certificates \
 
 ## Rotating the CA certificate
 
-Assuming that the key hasn't changed, create a new certificate as follows:
+Create a new certificate as follows:
 
 ```sh
 cert_timestamp="$(date +%FT%H-%M-%S)"
 openssl req -new -x509 -key erlclu-ca.key -sha256 \
-    -subj "/C=GB/L=London/O=differentpla.net/CN=erlclu CA" -out "erlclu-ca-$cert_timestamp.crt"
+    -subj "/C=GB/L=London/O=differentpla.net/CN=erlclu CA $cert_timestamp" -out "erlclu-ca-$cert_timestamp.crt"
 ```
 
 If we update the _cert-manager_ keypair at this point, new or restarted pods will fail to join the cluster, because the
@@ -54,14 +54,13 @@ existing nodes don't trust the newly-issued certificates. So we have to update t
 ```sh
 kubectl --namespace erlclu get secret erlclu-ca-certificates -o json | \
     jq -r '.data."ca.crt"' | base64 -d > erlclu-ca-existing.crt
-cat erlclu-ca-*.crt > ca-certificates.crt
+
+./filter-ca-certs.escript <(cat erlclu-ca-*.crt) > ca-certificates.crt
+
 kubectl --namespace erlclu delete secret erlclu-ca-certificates
 kubectl --namespace erlclu create secret generic erlclu-ca-certificates \
     --from-file=ca.crt=ca-certificates.crt
 ```
-
-Note that the above results in unbounded growth of the CA list, because we don't remove expired certificates or
-duplicates. I'll fix that later.
 
 Now we can update the _cert-manager_ keypair as follows:
 
