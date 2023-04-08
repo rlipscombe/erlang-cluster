@@ -13,4 +13,5 @@ sslsocket_from_pid(Pid) ->
 
     Transport = gen_tcp,
     ConnectionCb = tls_connection,
-    {sslsocket, {Transport, Port, ConnectionCb, undefined}, [Pid, Pid2]}.
+    Trackers = undefined,
+    {sslsocket, {Transport, Port, ConnectionCb, Trackers}, [Pid, Pid2]}.
