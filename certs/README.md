@@ -4,8 +4,9 @@
 
 We'll use an EC keypair. They're smaller than RSA keys for the same strength.
 
-```
-openssl ecparam -name prime256v1 -genkey -noout -out erlclu-ca.key
+```sh
+cert_timestamp="$(date +%FT%H-%M-%S)"
+openssl ecparam -name prime256v1 -genkey -noout -out erlclu-ca-$cert_timestamp.key
 ```
 
 ## CA Certificate
@@ -13,29 +14,29 @@ openssl ecparam -name prime256v1 -genkey -noout -out erlclu-ca.key
 Note that this is just enough to get it working; I've not considered expiry, usages, whatever. Depending on your
 security policies, you might want to keep a root CA in an HSM and use an intermediate CA.
 
-```
+```sh
 openssl req -new -x509 -key erlclu-ca.key -sha256 \
-    -subj "/C=GB/L=London/O=differentpla.net/CN=erlclu CA" -out erlclu-ca.crt
+    -subj "/C=GB/L=London/O=differentpla.net/CN=erlclu CA $cert_timestamp" -out "erlclu-ca-$cert_timestamp.crt"
 ```
 
 ## CA Secret
 
 This is the secret used by _cert-manager_ for signing TLS distribution certificates. See `erlclu-init.sh`.
 
-```
+```sh
 kubectl --namespace erlclu create secret tls erlclu-ca-key-pair \
-    --cert=erlclu-ca.crt \
-    --key=erlclu-ca.key
+    --cert=erlclu-ca-$cert_timestamp.crt \
+    --key=erlclu-ca-$cert_timestamp.key
 ```
 
 ## Trusted CA Secret
 
 To allow for rotating CA certificates in future, we need to trust multiple CA certificates, rather than only the one
-used by _cert-manager_. We use a separate secret for that. For now, though, it's just a single certificate:
+used by _cert-manager_. We use a separate secret for that. Initially, though, it's just a single certificate:
 
-```
+```sh
 kubectl --namespace erlclu create secret generic erlclu-ca-certificates \
-    --from-file=ca.crt=erlclu-ca.crt
+    --from-file=ca.crt=erlclu-ca-$cert_timestamp.crt
 ```
 
 ## Rotating the CA certificate
@@ -44,7 +45,7 @@ Create a new certificate as follows:
 
 ```sh
 cert_timestamp="$(date +%FT%H-%M-%S)"
-openssl req -new -x509 -key erlclu-ca.key -sha256 \
+openssl req -new -x509 -key erlclu-ca-$cert_timestamp.key -sha256 \
     -subj "/C=GB/L=London/O=differentpla.net/CN=erlclu CA $cert_timestamp" -out "erlclu-ca-$cert_timestamp.crt"
 ```
 
@@ -68,5 +69,5 @@ Now we can update the _cert-manager_ keypair as follows:
 kubectl --namespace erlclu delete secret erlclu-ca-key-pair
 kubectl --namespace erlclu create secret tls erlclu-ca-key-pair \
     --cert=erlclu-ca-$cert_timestamp.crt \
-    --key=erlclu-ca.key
+    --key=erlclu-ca-$cert_timestamp.key
 ```
