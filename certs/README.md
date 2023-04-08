@@ -41,6 +41,13 @@ kubectl --namespace erlclu create secret generic erlclu-ca-certificates \
 
 ## Rotating the CA certificate
 
+Optionally create a new key as follows:
+
+```sh
+cert_timestamp="$(date +%FT%H-%M-%S)"
+openssl ecparam -name prime256v1 -genkey -noout -out erlclu-ca-$cert_timestamp.key
+```
+
 Create a new certificate as follows:
 
 ```sh
