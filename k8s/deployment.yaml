@@ -46,7 +46,7 @@ spec:
               readOnly: false
       containers:
         - name: erlclu
-          image: docker.k3s.differentpla.net/erlclu:0.10.4
+          image: docker.k3s.differentpla.net/erlclu:opentelemetry
           imagePullPolicy: Always
           resources:
             limits:
