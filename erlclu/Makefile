@@ -8,6 +8,9 @@ all: build-image push-image
 shell:
 	rebar3 shell --sname erlclu
 
+get-deps:
+	rebar3 get-deps
+
 release:
 	rebar3 as prod release
 
