@@ -51,7 +51,7 @@ start_http_listener(Port) when is_integer(Port) ->
     ok.
 
 start_prometheus_listener() ->
-    Port = list_to_integer(os:getenv("METRICS_PORT", "8080")),
+    Port = list_to_integer(os:getenv("METRICS_PORT", "9153")),
     start_prometheus_listener(Port).
 
 start_prometheus_listener(Port) when is_integer(Port) ->
