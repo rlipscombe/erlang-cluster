@@ -1,7 +1,8 @@
 RELEASE_VSN ?= 0.10.4
+BRANCH_NAME ?= $(shell git branch --show-current)
 DOCKER_REGISTRY ?= docker.k3s.differentpla.net
 
-export RELEASE_VSN DOCKER_REGISTRY
+export RELEASE_VSN BRANCH_NAME DOCKER_REGISTRY
 
 all:
 	make -C erlclu

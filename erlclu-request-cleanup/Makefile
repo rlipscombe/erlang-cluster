@@ -5,3 +5,4 @@ build-image:
 
 push-image:
 	podman push erlclu-request-cleanup $(DOCKER_REGISTRY)/erlclu-request-cleanup:$(RELEASE_VSN)
+	podman push erlclu-request-cleanup $(DOCKER_REGISTRY)/erlclu-request-cleanup:$(BRANCH_NAME)

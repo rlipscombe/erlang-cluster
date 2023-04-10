@@ -1,4 +1,5 @@
 RELEASE_VSN ?= dev
+BRANCH_NAME ?= $(shell git branch --show-current)
 
 export RELEASE_VSN
 
@@ -18,3 +19,4 @@ build-image:
 
 push-image:
 	podman push erlclu $(DOCKER_REGISTRY)/erlclu:$(RELEASE_VSN)
+	podman push erlclu $(DOCKER_REGISTRY)/erlclu:$(BRANCH_NAME)

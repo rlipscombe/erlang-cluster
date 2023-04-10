@@ -5,3 +5,4 @@ build-init-image:
 
 push-init-image:
 	podman push erlclu-init $(DOCKER_REGISTRY)/erlclu-init:$(RELEASE_VSN)
+	podman push erlclu-init $(DOCKER_REGISTRY)/erlclu-init:$(BRANCH_NAME)
