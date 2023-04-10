@@ -19,7 +19,9 @@ start_ssh_daemon() ->
     UserDir = os:getenv("SSH_USER_DIR"),
     start_ssh_daemon(Port, SystemDir, UserDir).
 
-start_ssh_daemon(Port, SystemDir, UserDir) when is_integer(Port), is_list(SystemDir), is_list(UserDir) ->
+start_ssh_daemon(Port, SystemDir, UserDir) when
+    is_integer(Port), is_list(SystemDir), is_list(UserDir)
+->
     {ok, _} = ssh:daemon(Port, [
         {system_dir, SystemDir},
         {user_dir, UserDir},
