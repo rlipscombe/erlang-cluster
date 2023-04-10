@@ -32,6 +32,10 @@ start_ssh_daemon(_Port, _SystemDir, _UserDir) ->
     ?LOG_WARNING("Not starting SSH daemon").
 
 start_http_listener() ->
+    Port = list_to_integer(os:getenv("HTTP_PORT", "8080")),
+    start_http_listener(Port).
+
+start_http_listener(Port) when is_integer(Port) ->
     Dispatch = cowboy_router:compile([
         {'_', [
             {"/", home_handler, []},
@@ -40,13 +44,17 @@ start_http_listener() ->
     ]),
     {ok, _} = cowboy:start_clear(
         erlclu_listener,
-        [{port, 8080}],
+        [{port, Port}],
         #{env => #{dispatch => Dispatch}}
     ),
-    ?LOG_INFO("Cowboy listening on port 8080"),
+    ?LOG_INFO("Cowboy listening on port ~B", [Port]),
     ok.
 
 start_prometheus_listener() ->
+    Port = list_to_integer(os:getenv("METRICS_PORT", "8080")),
+    start_prometheus_listener(Port).
+
+start_prometheus_listener(Port) when is_integer(Port) ->
     Dispatch = cowboy_router:compile([
         {'_', [
             {"/metrics/[:registry]", erlclu_metrics_handler, []}
@@ -54,10 +62,10 @@ start_prometheus_listener() ->
     ]),
     {ok, _} = cowboy:start_clear(
         prometheus_listener,
-        [{port, 9153}],
+        [{port, Port}],
         #{env => #{dispatch => Dispatch}}
     ),
-    ?LOG_INFO("Metrics on port 9153"),
+    ?LOG_INFO("Metrics on port ~B", [Port]),
     ok.
 
 stop(_State) ->
