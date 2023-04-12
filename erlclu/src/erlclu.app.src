@@ -14,7 +14,8 @@
         cowboy,
         cowboy_telemetry,
         bbmustache,
-        prometheus
+        prometheus,
+        quantile_estimator
     ]},
     {env, []},
     {modules, []},
