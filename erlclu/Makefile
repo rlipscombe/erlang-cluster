@@ -1,5 +1,6 @@
 RELEASE_VSN ?= dev
 BRANCH_NAME ?= $(shell git branch --show-current)
+IMAGE_NAME := erlclu
 
 export RELEASE_VSN
 
@@ -18,8 +19,8 @@ console:
 	MY_POD_IP=$(shell hostname) RELEASE_COOKIE=cookie ./_build/prod/rel/erlclu/bin/erlclu console
 
 build-image:
-	podman build -f Dockerfile --build-arg RELEASE_VSN=$(RELEASE_VSN) -t erlclu
+	podman build -f Dockerfile --build-arg RELEASE_VSN=$(RELEASE_VSN) -t $(IMAGE_NAME)
 
 push-image:
-	podman push erlclu $(DOCKER_REGISTRY)/erlclu:$(RELEASE_VSN)
-	podman push erlclu $(DOCKER_REGISTRY)/erlclu:$(BRANCH_NAME)
+	podman push $(IMAGE_NAME) $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(RELEASE_VSN)
+	podman push $(IMAGE_NAME) $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(BRANCH_NAME)

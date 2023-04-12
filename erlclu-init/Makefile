@@ -1,8 +1,10 @@
-all: build-init-image push-init-image
+IMAGE_NAME := erlclu-init
 
-build-init-image:
-	podman build -f Dockerfile -t erlclu-init
+all: build-image push-image
 
-push-init-image:
-	podman push erlclu-init $(DOCKER_REGISTRY)/erlclu-init:$(RELEASE_VSN)
-	podman push erlclu-init $(DOCKER_REGISTRY)/erlclu-init:$(BRANCH_NAME)
+build-image:
+	podman build -f Dockerfile --build-arg RELEASE_VSN=$(RELEASE_VSN) -t $(IMAGE_NAME)
+
+push-image:
+	podman push $(IMAGE_NAME) $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(RELEASE_VSN)
+	podman push $(IMAGE_NAME) $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(BRANCH_NAME)
