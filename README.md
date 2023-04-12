@@ -13,7 +13,7 @@ This project demonstrates the following:
 ## Contents
 
 - `erlclu`: the Erlang node.
-- `erlclu-init`: init container that provisions the certificates.
+- `erlclu-cert-init`: init container that provisions the certificates.
 - `erlclu-request-cleanup`: cron job that cleans up completed/stale certificate
   requests.
 - `k8s`: Kubernetes manifests.

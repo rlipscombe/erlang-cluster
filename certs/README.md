@@ -21,7 +21,7 @@ openssl req -new -x509 -key erlclu-ca.key -sha256 \
 
 ## CA Secret
 
-This is the secret used by _cert-manager_ for signing TLS distribution certificates. See `erlclu-init.sh`.
+This is the secret used by _cert-manager_ for signing TLS distribution certificates. See `erlclu-cert-init.sh`.
 
 ```sh
 kubectl --namespace erlclu create secret tls erlclu-ca-key-pair \

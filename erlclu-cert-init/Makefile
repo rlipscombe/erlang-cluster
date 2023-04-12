@@ -1,4 +1,4 @@
-IMAGE_NAME := erlclu-init
+IMAGE_NAME := erlclu-cert-init
 
 all: build-image push-image
 

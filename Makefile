@@ -6,7 +6,7 @@ export RELEASE_VSN BRANCH_NAME DOCKER_REGISTRY
 
 all:
 	make -C erlclu
-	make -C erlclu-init
+	make -C erlclu-cert-init
 	make -C erlclu-request-cleanup
 
 release:

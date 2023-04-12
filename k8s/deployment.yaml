@@ -20,8 +20,8 @@ spec:
         runAsGroup: 10000
       serviceAccountName: erlclu
       initContainers:
-        - name: erlclu-init
-          image: docker.k3s.differentpla.net/erlclu-init:0.10.7
+        - name: erlclu-cert-init
+          image: docker.k3s.differentpla.net/erlclu-cert-init:0.10.7
           imagePullPolicy: Always
           env:
             - name: MY_POD_IP
