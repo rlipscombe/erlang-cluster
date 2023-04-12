@@ -36,6 +36,8 @@ start_http_listener() ->
     start_http_listener(Port).
 
 start_http_listener(Port) when is_integer(Port) ->
+    opentelemetry_cowboy:setup(),
+
     Dispatch = cowboy_router:compile([
         {'_', [
             {"/", home_handler, []},
@@ -45,7 +47,10 @@ start_http_listener(Port) when is_integer(Port) ->
     {ok, _} = cowboy:start_clear(
         erlclu_listener,
         [{port, Port}],
-        #{env => #{dispatch => Dispatch}}
+        #{
+            env => #{dispatch => Dispatch},
+            stream_handlers => [cowboy_telemetry_h, cowboy_stream_h]
+        }
     ),
     ?LOG_INFO("Cowboy listening on port ~B", [Port]),
     ok.

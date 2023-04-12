@@ -9,7 +9,10 @@
         ssh,
         opentelemetry,
         opentelemetry_api,
+        opentelemetry_cowboy,
+        opentelemetry_telemetry,
         cowboy,
+        cowboy_telemetry,
         bbmustache,
         prometheus
     ]},
