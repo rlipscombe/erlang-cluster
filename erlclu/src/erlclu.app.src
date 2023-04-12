@@ -7,6 +7,8 @@
         kernel,
         stdlib,
         ssh,
+        opentelemetry,
+        opentelemetry_api,
         cowboy,
         bbmustache,
         prometheus
