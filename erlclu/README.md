@@ -38,7 +38,7 @@ cat ~/.ssh/id_rsa.pub
 Add it to the ConfigMap:
 
 ```
-kubectl --namespace erlclu edit configmap authorized-keys-cm
+kubectl --namespace erlclu edit configmap authorized-keys
 ```
 
 Edit the `data.authorized-keys` section. It looks something like this:
