@@ -6,3 +6,5 @@ case os:getenv("RELEASE_VSN") of
         App = lists:keyreplace(vsn, 1, App0, {vsn, Vsn}),
         lists:keyreplace(application, 1, CONFIG, {application, Name, App})
 end.
+
+% vi: ft=erlang

@@ -30,6 +30,8 @@ RUN apk add --no-cache openssl && \
 RUN apk add --no-cache tini
 
 COPY --from=build /build/_build/prod/rel/erlclu /erlclu
+COPY /container/entrypoint.sh /
+COPY /container/entrypoint.d /entrypoint.d
 
 RUN addgroup -g 10000 erlclu && adduser -u 10000 -D -G erlclu -h /erlclu erlclu
 RUN chown -R erlclu.erlclu /erlclu/releases/${RELEASE_VSN}
@@ -39,4 +41,4 @@ ENV HOME /erlclu
 EXPOSE 8080 9153
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["/erlclu/bin/erlclu", "foreground"]
+CMD ["/entrypoint.sh", "/erlclu/bin/erlclu", "foreground"]

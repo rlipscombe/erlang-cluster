@@ -21,7 +21,7 @@ spec:
       serviceAccountName: erlclu
       initContainers:
         - name: erlclu-cert-init
-          image: docker.k3s.differentpla.net/erlclu-cert-init:0.10.8
+          image: docker.k3s.differentpla.net/erlclu-cert-init:0.11.0
           imagePullPolicy: Always
           env:
             - name: MY_POD_IP
@@ -46,7 +46,7 @@ spec:
               readOnly: false
       containers:
         - name: erlclu
-          image: docker.k3s.differentpla.net/erlclu:0.10.8
+          image: docker.k3s.differentpla.net/erlclu:0.11.0
           imagePullPolicy: Always
           resources:
             limits:
@@ -74,6 +74,14 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: CONFIG_SOURCE
+              value: /erlclu/_config
+            - name: CONFIG_TARGET
+              value: /erlclu/config
+            - name: VMARGS_PATH
+              value: /erlclu/config/vm.args
+            - name: RELX_CONFIG_PATH
+              value: /erlclu/config/sys.config
             - name: SSH_PORT
               value: "22"
             - name: SSH_SYSTEM_DIR
@@ -92,6 +100,8 @@ spec:
             - name: authorized-keys
               mountPath: /erlclu/ssh/user
               readOnly: true
+            - name: erlclu-config
+              mountPath: /erlclu/_config
       volumes:
         - name: tls-dist
           emptyDir:
@@ -109,3 +119,6 @@ spec:
             items:
             - key: authorized-keys
               path: authorized_keys
+        - name: erlclu-config
+          configMap:
+            name: erlclu-config

@@ -13,3 +13,5 @@ case os:getenv("RELEASE_VSN") of
         Relx = lists:keyreplace(release, 1, Relx0, {release, {Name, Vsn}, Apps}),
         lists:keyreplace(relx, 1, CONFIG2, {relx, Relx})
 end.
+
+% vi: ft=erlang
