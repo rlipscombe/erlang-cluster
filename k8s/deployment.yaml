@@ -74,6 +74,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: CONFIG_SOURCE
+              value: /erlclu/_config
+            - name: CONFIG_TARGET
+              value: /erlclu/config
             - name: SSH_PORT
               value: "22"
             - name: SSH_SYSTEM_DIR
@@ -92,6 +96,8 @@ spec:
             - name: authorized-keys
               mountPath: /erlclu/ssh/user
               readOnly: true
+            - name: erlclu-config
+              mountPath: /erlclu/_config
       volumes:
         - name: tls-dist
           emptyDir:
@@ -109,3 +115,6 @@ spec:
             items:
             - key: authorized-keys
               path: authorized_keys
+        - name: erlclu-config
+          configMap:
+            name: erlclu-config
