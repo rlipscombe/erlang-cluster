@@ -78,6 +78,10 @@ spec:
               value: /erlclu/_config
             - name: CONFIG_TARGET
               value: /erlclu/config
+            - name: VMARGS_PATH
+              value: /erlclu/config/vm.args
+            - name: RELX_CONFIG_PATH
+              value: /erlclu/config/sys.config
             - name: SSH_PORT
               value: "22"
             - name: SSH_SYSTEM_DIR
