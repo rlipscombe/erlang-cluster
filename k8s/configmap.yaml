@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: erlclu-config
+  namespace: erlclu
+data:
+  sys.config: |
+    [
+      {erlclu, []},
+
+      {opentelemetry, [
+        {span_processor, batch},
+        {traces_exporter, {otel_exporter_stdout, []}}
+      ]},
+
+      {kernel, [
+        {logger_level, info},
+        {logger, [{handler, default, logger_std_h, #{formatter => {logger_formatter, #{}}}}]}
+      ]}
+    ].
+  vm.args.src: |
+    -name erlclu@${MY_POD_IP}
+    -setcookie ${RELEASE_COOKIE}
+
+    -proto_dist inet_tls
+    -ssl_dist_optfile ${ROOTDIR}/inet_tls_dist.config
+
+    +K true
+    +A30
