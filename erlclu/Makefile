@@ -1,6 +1,7 @@
+IMAGE_NAME := erlclu
 RELEASE_VSN ?= dev
 BRANCH_NAME ?= $(shell git branch --show-current)
-IMAGE_NAME := erlclu
+IMAGE_TAG := $(subst +,_,$(RELEASE_VSN))
 
 export RELEASE_VSN
 
@@ -22,5 +23,5 @@ build-image:
 	podman build -f Dockerfile --build-arg RELEASE_VSN=$(RELEASE_VSN) -t $(IMAGE_NAME)
 
 push-image:
-	podman push $(IMAGE_NAME) $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(RELEASE_VSN)
+	podman push $(IMAGE_NAME) $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG)
 	podman push $(IMAGE_NAME) $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(BRANCH_NAME)

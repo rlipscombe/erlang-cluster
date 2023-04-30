@@ -1,4 +1,4 @@
-RELEASE_VSN ?= 0.11.0
+RELEASE_VSN ?= $(shell scripts/git-vsn)
 BRANCH_NAME ?= $(shell git branch --show-current)
 DOCKER_REGISTRY ?= docker.k3s.differentpla.net
 

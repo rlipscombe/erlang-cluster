@@ -20,12 +20,10 @@ This project demonstrates the following:
 
 ## Deploying it
 
-1. Update `RELEASE_VSN` in the top-level Makefile. Do this first, otherwise `make` will overwrite the current container
-   image, which might break things if a pod gets deployed.
-2. If you want ArgoCD to track this branch: `argocd app set erlang-cluster --revision BRANCH`
-3. Hack hack hack.
-4. Run `make` at the top-level. This will build and push the container images.
-5. Update the image tags in the `k8s/` directory.
-6. Either:
+1. If you want ArgoCD to track this branch: `argocd app set erlang-cluster --revision BRANCH`
+2. Hack hack hack.
+3. Run `make` at the top-level. This will build and push the container images.
+4. Update the image tags in the `k8s/` directory.
+5. Either:
    - `kubectl apply -k k8s/`
    - `argocd app sync erlang-cluster`
