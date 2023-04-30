@@ -1,0 +1,17 @@
+namespace: erlclu
+resources:
+  - cleanup-cronjob.yaml
+  - deployment.yaml
+  - headless-service.yaml
+  - ingress.yaml
+  - issuer.yaml
+  - role-binding.yaml
+  - role.yaml
+  - service-account.yaml
+  - service.yaml
+  - vm-scraper.yaml
+configMapGenerator:
+  - name: erlclu-config
+    files:
+      - config/vm.args.src
+      - config/sys.config
