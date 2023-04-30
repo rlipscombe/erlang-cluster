@@ -27,4 +27,4 @@ This project demonstrates the following:
 4. Update the image tags in the `k8s/` directory.
 5. Either:
    - `kubectl apply -f k8s/`
-   - `argocd app sync erlang-cluster`
+   - `argocd app set erlang-cluster --revision BRANCH && argocd app sync erlang-cluster`
