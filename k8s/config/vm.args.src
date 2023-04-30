@@ -1,0 +1,7 @@
+-name erlclu@${MY_POD_IP}
+-setcookie ${RELEASE_COOKIE}
+
+-proto_dist inet_tls -ssl_dist_optfile ${ROOTDIR}/inet_tls_dist.config
+
++K true
++A30

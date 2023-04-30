@@ -26,5 +26,5 @@ This project demonstrates the following:
 3. Run `make` at the top-level. This will build and push the container images.
 4. Update the image tags in the `k8s/` directory.
 5. Either:
-   - `kubectl apply -f k8s/`
+   - `kubectl apply -k k8s/`
    - `argocd app set erlang-cluster --revision BRANCH && argocd app sync erlang-cluster`
