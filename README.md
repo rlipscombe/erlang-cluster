@@ -23,7 +23,7 @@ This project demonstrates the following:
 1. If you want ArgoCD to track this branch: `argocd app set erlang-cluster --revision BRANCH`
 2. Hack hack hack.
 3. Run `make` at the top-level. This will build and push the container images.
-4. Update the image tags in the `k8s/` directory.
+4. Update the image tags in the `k8s/` directory. Note that `+` in the semver is changed to `_` in the image tag.
 5. Either:
    - `kubectl apply -k k8s/`
    - `argocd app sync erlang-cluster`
