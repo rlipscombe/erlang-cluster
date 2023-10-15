@@ -8,6 +8,13 @@ init(Req0, Opts) ->
     Nodes = lists:sort([node() | nodes()]),
     {ok, Vsn} = application:get_key(?APPLICATION, vsn),
 
+    {ok, [[DistOptFile]]} = init:get_argument(ssl_dist_optfile),
+    {ok, [DistOpts]} = file:consult(DistOptFile),
+    ClientOpts = proplists:get_value(client, DistOpts),
+    MyCertFile = proplists:get_value(certfile, ClientOpts),
+    [MyCert] = erlclu_cert:read_certificate(MyCertFile),
+    MyCertDetails = erlclu_cert:convert_certificate(MyCert),
+
     Priv = code:priv_dir(?APPLICATION),
     {ok, Template} =
         file:read_file(
@@ -23,8 +30,9 @@ init(Req0, Opts) ->
                 nodes => Nodes,
                 node_count => length(Nodes),
                 application_vsn => Vsn,
+                uptime => uptime(),
                 cookie => erlang:get_cookie(),
-                uptime => uptime()
+                my_cert => io_lib:format("~p", [MyCertDetails])
             },
             [{key_type, atom}]
         ),
