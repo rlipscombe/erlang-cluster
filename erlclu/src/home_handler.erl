@@ -23,8 +23,8 @@ init(Req0, Opts) ->
                 nodes => Nodes,
                 node_count => length(Nodes),
                 application_vsn => Vsn,
-                cookie => erlang:get_cookie(),
-                uptime => uptime()
+                uptime => uptime(),
+                cookie => erlang:get_cookie()
             },
             [{key_type, atom}]
         ),
