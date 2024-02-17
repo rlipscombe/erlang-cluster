@@ -10,10 +10,27 @@ init(Req0, Opts) ->
 
     {ok, [[DistOptFile]]} = init:get_argument(ssl_dist_optfile),
     {ok, [DistOpts]} = file:consult(DistOptFile),
+
+    % TODO: Lotta duplication.
     ClientOpts = proplists:get_value(client, DistOpts),
-    MyCertFile = proplists:get_value(certfile, ClientOpts),
-    [MyCert] = erlclu_cert:read_certificate(MyCertFile),
-    MyCertDetails = erlclu_cert:convert_certificate(MyCert),
+ 
+    ClientCertFile = proplists:get_value(certfile, ClientOpts),
+    [ClientCert] = erlclu_cert:read_certificate(ClientCertFile),
+    ClientCertDetails = erlclu_cert:convert_certificate(ClientCert),
+
+    ClientCaFile = proplists:get_value(cacertfile, ClientOpts),
+    [ClientCa] = erlclu_cert:read_certificate(ClientCaFile),
+    ClientCaDetails = erlclu_cert:convert_certificate(ClientCa),
+
+    ServerOpts = proplists:get_value(server, DistOpts),
+
+    ServerCertFile = proplists:get_value(certfile, ServerOpts),
+    [ServerCert] = erlclu_cert:read_certificate(ServerCertFile),
+    ServerCertDetails = erlclu_cert:convert_certificate(ServerCert),
+
+    ServerCaFile = proplists:get_value(cacertfile, ServerOpts),
+    [ServerCa] = erlclu_cert:read_certificate(ServerCaFile),
+    ServerCaDetails = erlclu_cert:convert_certificate(ServerCa),
 
     Priv = code:priv_dir(?APPLICATION),
     {ok, Template} =
@@ -32,7 +49,10 @@ init(Req0, Opts) ->
                 application_vsn => Vsn,
                 uptime => uptime(),
                 cookie => erlang:get_cookie(),
-                my_cert => io_lib:format("~p", [MyCertDetails])
+                client_cert => io_lib:format("~p", [ClientCertDetails]),
+                client_ca => io_lib:format("~p", [ClientCaDetails]),
+                server_cert => io_lib:format("~p", [ServerCertDetails]),
+                server_ca => io_lib:format("~p", [ServerCaDetails])
             },
             [{key_type, atom}]
         ),
