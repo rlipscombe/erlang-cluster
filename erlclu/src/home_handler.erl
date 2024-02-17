@@ -19,8 +19,8 @@ init(Req0, Opts) ->
     ClientCertDetails = erlclu_cert:convert_certificate(ClientCert),
 
     ClientCaFile = proplists:get_value(cacertfile, ClientOpts),
-    [ClientCa] = erlclu_cert:read_certificate(ClientCaFile),
-    ClientCaDetails = erlclu_cert:convert_certificate(ClientCa),
+    ClientCas = erlclu_cert:read_certificate(ClientCaFile),
+    ClientCaDetails = [erlclu_cert:convert_certificate(Ca) || Ca <- ClientCas],
 
     ServerOpts = proplists:get_value(server, DistOpts),
 
@@ -29,8 +29,8 @@ init(Req0, Opts) ->
     ServerCertDetails = erlclu_cert:convert_certificate(ServerCert),
 
     ServerCaFile = proplists:get_value(cacertfile, ServerOpts),
-    [ServerCa] = erlclu_cert:read_certificate(ServerCaFile),
-    ServerCaDetails = erlclu_cert:convert_certificate(ServerCa),
+    ServerCas = erlclu_cert:read_certificate(ServerCaFile),
+    ServerCaDetails = [erlclu_cert:convert_certificate(Ca) || Ca <- ServerCas],
 
     Priv = code:priv_dir(?APPLICATION),
     {ok, Template} =
