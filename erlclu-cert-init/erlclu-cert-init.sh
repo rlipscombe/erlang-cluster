@@ -4,7 +4,7 @@
 
 # Create a private key
 openssl ecparam -name prime256v1 -genkey -noout -out "$CERTS_DIR/$CERT_FILENAME.key"
-#openssl ec -in "$CERTS_DIR/$CERT_FILENAME.key" -text -noout 2>/dev/null
+openssl ec -in "$CERTS_DIR/$CERT_FILENAME.key" -text -noout 2>/dev/null
 
 # Create a certificate signing request.
 cat <<EOF > "$CERTS_DIR/$CERT_FILENAME.cnf"
@@ -29,7 +29,7 @@ openssl req -new \
             -out "$CERTS_DIR/$CERT_FILENAME.csr" \
             -config "$CERTS_DIR/$CERT_FILENAME.cnf"
 
-#openssl req -in "$CERTS_DIR/$CERT_FILENAME.csr" -text -noout
+openssl req -in "$CERTS_DIR/$CERT_FILENAME.csr" -text -noout
 
 encoded_csr=$(base64 -w0 < "$CERTS_DIR/$CERT_FILENAME.csr")
 
@@ -88,5 +88,5 @@ if [ "$ready_status" != "True" ]; then exit 1; fi
 # Write the generated cert to a file. The trusted CA certs are managed elsewhere.
 echo "$res" | jq -r '.status.certificate' | base64 -d > "$CERTS_DIR/$CERT_FILENAME.crt"
 
-#openssl x509 -in "$CERTS_DIR/$CERT_FILENAME.crt" -text -noout
-#openssl x509 -in "$CERTS_DIR/ca.crt" -text -noout
+openssl x509 -in "$CERTS_DIR/$CERT_FILENAME.crt" -text -noout
+openssl x509 -in "$CERTS_DIR/ca.crt" -text -noout
