@@ -61,7 +61,7 @@ cat << EOF | \
     },
     "spec": {
         "request": "$encoded_csr",
-        "usages": ["any"]
+        "usages": ["any"],
         "issuerRef": {
             "kind": "$ISSUER_KIND",
             "name": "$ISSUER_NAME"
