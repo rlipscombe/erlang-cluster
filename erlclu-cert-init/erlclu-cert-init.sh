@@ -16,6 +16,7 @@ distinguished_name = req_distinguished_name
 
 [req_extensions]
 subjectAltName = @alt_names
+keyUsage = digitalSignature, keyEncipherment
 extendedKeyUsage = serverAuth,clientAuth
 
 [alt_names]
