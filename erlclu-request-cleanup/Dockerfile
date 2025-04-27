@@ -1,4 +1,5 @@
-FROM docker.io/alpine:3.21.3
+FROM --platform=$TARGETPLATFORM docker.io/alpine:3.21.3
+ARG TARGETPLATFORM
 
 # unused; suppress "not consumed" warning
 ARG RELEASE_VSN

@@ -1,4 +1,5 @@
-FROM docker.io/erlang:27.3.3-alpine AS build
+FROM --platform=$TARGETPLATFORM docker.io/erlang:27.3.3-alpine AS build
+ARG TARGETPLATFORM
 
 # We need git for rebar3 get-deps.
 RUN apk add --no-cache git
@@ -20,7 +21,7 @@ ARG RELEASE_VSN
 RUN rebar3 as prod release
 
 ####
-FROM docker.io/alpine:3.21.3
+FROM --platform=$TARGETPLATFORM docker.io/alpine:3.21.3
 
 RUN apk add --no-cache openssl && \
     apk add --no-cache ncurses-libs && \

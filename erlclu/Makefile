@@ -2,6 +2,7 @@ IMAGE_NAME := erlclu
 RELEASE_VSN ?= dev
 BRANCH_NAME ?= $(subst /,_,$(shell git branch --show-current))
 IMAGE_TAG := $(subst +,_,$(RELEASE_VSN))
+PLATFORMS ?= linux/amd64,linux/arm64/v8
 
 export RELEASE_VSN
 
@@ -23,8 +24,10 @@ console:
 	MY_POD_IP=$(shell hostname) RELEASE_COOKIE=cookie ./_build/prod/rel/erlclu/bin/erlclu console
 
 build-image:
-	podman build -f Dockerfile --build-arg RELEASE_VSN=$(RELEASE_VSN) --platform linux/amd64 -t $(IMAGE_NAME)
+	podman manifest exists $(IMAGE_NAME) && podman manifest rm $(IMAGE_NAME) || true
+	podman manifest create $(IMAGE_NAME)
+	podman build -f Dockerfile --build-arg RELEASE_VSN=$(RELEASE_VSN) --platform $(PLATFORMS) --manifest $(IMAGE_NAME)
 
 push-image:
-	podman push $(IMAGE_NAME) $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG)
-	podman push $(IMAGE_NAME) $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(BRANCH_NAME)
+	podman manifest push $(IMAGE_NAME) $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG)
+	podman manifest push $(IMAGE_NAME) $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(BRANCH_NAME)
