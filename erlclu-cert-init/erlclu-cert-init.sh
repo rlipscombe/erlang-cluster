@@ -61,6 +61,7 @@ cat << EOF | \
     },
     "spec": {
         "request": "$encoded_csr",
+        "usages": ["digital signature", "key encipherment", "server auth", "client auth"]
         "issuerRef": {
             "kind": "$ISSUER_KIND",
             "name": "$ISSUER_NAME"
