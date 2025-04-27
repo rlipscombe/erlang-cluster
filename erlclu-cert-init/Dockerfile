@@ -1,4 +1,4 @@
-FROM docker.io/alpine:3.17.3
+FROM docker.io/alpine:3.21.3
 
 RUN apk add --no-cache openssl && \
     apk add --no-cache curl && \

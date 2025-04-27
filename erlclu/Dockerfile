@@ -1,4 +1,4 @@
-FROM docker.io/erlang:25.3-alpine AS build
+FROM docker.io/erlang:27.3.3-alpine AS build
 
 # We need git for rebar3 get-deps.
 RUN apk add --no-cache git
@@ -20,7 +20,7 @@ ARG RELEASE_VSN
 RUN rebar3 as prod release
 
 ####
-FROM docker.io/alpine:3.17.3
+FROM docker.io/alpine:3.21.3
 
 RUN apk add --no-cache openssl && \
     apk add --no-cache ncurses-libs && \
