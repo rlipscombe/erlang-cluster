@@ -1,5 +1,8 @@
 FROM docker.io/alpine:3.21.3
 
+# unused; suppress "not consumed" warning
+ARG RELEASE_VSN
+
 RUN apk add --no-cache openssl && \
     apk add --no-cache curl && \
     apk add --no-cache jq
