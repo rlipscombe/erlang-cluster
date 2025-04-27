@@ -34,7 +34,7 @@ COPY /container/entrypoint.sh /
 COPY /container/entrypoint.d /entrypoint.d
 
 RUN addgroup -g 10000 erlclu && adduser -u 10000 -D -G erlclu -h /erlclu erlclu
-RUN chown -R erlclu.erlclu /erlclu/releases/${RELEASE_VSN}
+RUN chown -R erlclu:erlclu /erlclu/releases/${RELEASE_VSN}
 USER erlclu
 ENV HOME /erlclu
 
