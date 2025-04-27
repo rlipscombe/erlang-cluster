@@ -1,6 +1,6 @@
 IMAGE_NAME := erlclu
 RELEASE_VSN ?= dev
-BRANCH_NAME ?= $(shell git branch --show-current)
+BRANCH_NAME ?= $(subst /,_,$(shell git branch --show-current))
 IMAGE_TAG := $(subst +,_,$(RELEASE_VSN))
 
 export RELEASE_VSN

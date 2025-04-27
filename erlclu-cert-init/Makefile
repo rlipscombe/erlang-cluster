@@ -1,6 +1,6 @@
 IMAGE_NAME := erlclu-cert-init
 RELEASE_VSN ?= dev
-BRANCH_NAME ?= $(shell git branch --show-current)
+BRANCH_NAME ?= $(subst /,_,$(shell git branch --show-current))
 IMAGE_TAG := $(subst +,_,$(RELEASE_VSN))
 
 all: build-image push-image
