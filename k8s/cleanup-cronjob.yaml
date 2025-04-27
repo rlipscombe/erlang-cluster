@@ -16,7 +16,7 @@ spec:
             kubernetes.io/arch: amd64
           containers:
             - name: request-cleanup
-              image: docker.k3s.differentpla.net/erlclu-request-cleanup:0.13.6
+              image: docker.k3s.differentpla.net/erlclu-request-cleanup:0.14.0
               imagePullPolicy: Always
               env:
                 - name: APPLICATION_LABEL
