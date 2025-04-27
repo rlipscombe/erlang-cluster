@@ -7,6 +7,9 @@ export RELEASE_VSN
 
 all: build-image push-image
 
+compile:
+	rebar3 compile
+
 shell:
 	rebar3 shell --sname erlclu
 
