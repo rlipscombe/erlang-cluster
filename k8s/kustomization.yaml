@@ -15,3 +15,6 @@ configMapGenerator:
     files:
       - config/vm.args.src
       - config/sys.config
+generatorOptions:
+  labels:
+    app.kubernetes.io/instance: erlang-cluster
