@@ -14,8 +14,16 @@ spec:
     spec:
       template:
         spec:
-          nodeSelector:
-            kubernetes.io/arch: amd64
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: kubernetes.io/arch
+                        operator: In
+                        values:
+                          - amd64
+                          - arm64
           containers:
             - name: request-cleanup
               image: docker.k3s.differentpla.net/erlclu-request-cleanup:0.15.2
