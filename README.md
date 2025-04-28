@@ -24,9 +24,10 @@ This project demonstrates the following:
 2. Hack hack hack.
 3. Run `make` at the top-level. This will build and push the container images.
 4. Update the image tags in the `k8s/` directory. Note that `+` in the semver is changed to `_` in the image tag. If
-   you're working on a branch, you can use the branch name.
+   you're working on a branch, you can use the branch name. Use `make RELEASE_VSN=0.15.1` (for example) if you don't
+   want the suffix.
 5. Either:
-   - `kubectl apply -k k8s/`
+   - `kubectl apply -k k8s/` (note: `-k`, not `-f`; we use kustomize)
    - `argocd app sync erlang-cluster`
 6. If you've made no changes to the deployment, but you want to roll out a new container image:
    - `kubectl --namespace erlclu rollout restart deployment erlclu`
