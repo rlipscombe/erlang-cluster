@@ -10,6 +10,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.tls: "true"
     # Ask cert-manager to issue a TLS certificate.
     cert-manager.io/cluster-issuer: k3s-ca-cluster-issuer
+    cert-manager.io/revision-history-limit: "3"
 
 spec:
   tls:
