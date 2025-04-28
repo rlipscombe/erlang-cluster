@@ -13,7 +13,7 @@ init(Req0, Opts) ->
 
     % TODO: Lotta duplication.
     ClientOpts = proplists:get_value(client, DistOpts),
- 
+
     ClientCertFile = proplists:get_value(certfile, ClientOpts),
     [ClientCert] = erlclu_cert:read_certificate(ClientCertFile),
     ClientCertDetails = erlclu_cert:convert_certificate(ClientCert),
@@ -46,6 +46,7 @@ init(Req0, Opts) ->
                 node => node(),
                 nodes => Nodes,
                 node_count => length(Nodes),
+                otp_release => list_to_binary(erlang:system_info(otp_release)),
                 application_vsn => Vsn,
                 uptime => uptime(),
                 cookie => erlang:get_cookie(),
