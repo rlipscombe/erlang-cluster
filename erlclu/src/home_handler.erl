@@ -49,6 +49,7 @@ init(Req0, Opts) ->
                 otp_release => list_to_binary(erlang:system_info(otp_release)),
                 application_vsn => Vsn,
                 uptime => uptime(),
+                system_architecture => list_to_binary(erlang:system_info(system_architecture)),
                 cookie => erlang:get_cookie(),
                 client_cert => io_lib:format("~p", [ClientCertDetails]),
                 client_ca => io_lib:format("~p", [ClientCaDetails]),
