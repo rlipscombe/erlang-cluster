@@ -20,7 +20,7 @@ console:
 	MY_POD_IP=$(shell hostname) RELEASE_COOKIE=cookie ./_build/prod/rel/erlclu/bin/erlclu console
 
 build-image:
-	podman build -f Dockerfile --build-arg RELEASE_VSN=$(RELEASE_VSN) -t $(IMAGE_NAME)
+	podman build -f Dockerfile --build-arg RELEASE_VSN=$(RELEASE_VSN) --platform linux/amd64 -t $(IMAGE_NAME)
 
 push-image:
 	podman push $(IMAGE_NAME) $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG)
