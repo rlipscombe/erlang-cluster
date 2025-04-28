@@ -2,6 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: authorized-keys
+  labels:
+    app.kubernetes.io/instance: erlang-cluster
   annotations:
     argocd.argoproj.io/compare-options: IgnoreExtraneous
 data:
