@@ -121,8 +121,8 @@ spec:
           configMap:
             name: authorized-keys
             items:
-            - key: authorized-keys
-              path: authorized_keys
+              - key: authorized-keys
+                path: authorized_keys
         - name: erlclu-config
           configMap:
             name: erlclu-config
