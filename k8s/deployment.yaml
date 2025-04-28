@@ -16,8 +16,16 @@ spec:
       labels:
         app: erlclu
     spec:
-      nodeSelector:
-        kubernetes.io/arch: amd64
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+                      - arm64
       securityContext:
         runAsNonRoot: true
         runAsUser: 10000
