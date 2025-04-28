@@ -1,4 +1,4 @@
-FROM docker.io/erlang:26.2.5.11-alpine AS build
+FROM docker.io/erlang:27.3.3-alpine AS build
 
 # We need git for rebar3 get-deps.
 RUN apk add --no-cache git
