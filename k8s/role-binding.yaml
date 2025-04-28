@@ -3,6 +3,8 @@ kind: RoleBinding
 metadata:
   name: request-certificate
   namespace: erlclu
+  labels:
+    app.kubernetes.io/instance: erlang-cluster
 subjects:
 - kind: ServiceAccount
   name: erlclu

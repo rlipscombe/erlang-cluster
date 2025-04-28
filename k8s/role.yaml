@@ -3,6 +3,8 @@ kind: Role
 metadata:
   namespace: erlclu
   name: certificate-requester
+  labels:
+    app.kubernetes.io/instance: erlang-cluster
 rules:
 - apiGroups: ["cert-manager.io"]
   resources: ["certificaterequests"]

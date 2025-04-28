@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: erlclu-http
   namespace: erlclu
+  labels:
+    app.kubernetes.io/instance: erlang-cluster
 spec:
   selector:
     app: erlclu

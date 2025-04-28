@@ -4,6 +4,8 @@ kind: Ingress
 metadata:
   name: erlclu
   namespace: erlclu
+  labels:
+    app.kubernetes.io/instance: erlang-cluster
   annotations:
     # Traefik: secure, plz.
     traefik.ingress.kubernetes.io/router.entrypoints: websecure

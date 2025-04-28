@@ -5,6 +5,8 @@ kind: Service
 metadata:
   name: erlclu-headless
   namespace: erlclu
+  labels:
+    app.kubernetes.io/instance: erlang-cluster
 spec:
   selector:
     app: erlclu

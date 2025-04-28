@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: erlclu
   namespace: erlclu
+  labels:
+    app.kubernetes.io/instance: erlang-cluster
 spec:
   replicas: 7
   revisionHistoryLimit: 3

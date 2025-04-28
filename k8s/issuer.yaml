@@ -3,6 +3,8 @@ kind: Issuer
 metadata:
   namespace: erlclu
   name: erlclu-issuer
+  labels:
+    app.kubernetes.io/instance: erlang-cluster
 spec:
   ca:
     secretName: erlclu-ca-key-pair
