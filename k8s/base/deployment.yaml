@@ -63,7 +63,7 @@ spec:
           resources:
             limits:
               cpu: "250m"
-              memory: "108Mi"
+              memory: "128Mi"
           readinessProbe:
             httpGet:
               path: /readyz
