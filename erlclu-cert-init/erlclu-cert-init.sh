@@ -21,6 +21,7 @@ extendedKeyUsage = serverAuth,clientAuth
 
 [alt_names]
 DNS = ${MY_POD_IP}
+IP = ${MY_POD_IP}
 EOF
 
 # TODO: Don't bother writing it to a file?

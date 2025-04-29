@@ -1,4 +1,4 @@
--module(home_handler).
+-module(index_handler).
 
 -export([init/2]).
 
@@ -10,27 +10,8 @@ init(Req0, Opts) ->
 
     {ok, [[DistOptFile]]} = init:get_argument(ssl_dist_optfile),
     {ok, [DistOpts]} = file:consult(DistOptFile),
-
-    % TODO: Lotta duplication.
-    ClientOpts = proplists:get_value(client, DistOpts),
-
-    ClientCertFile = proplists:get_value(certfile, ClientOpts),
-    [ClientCert] = erlclu_cert:read_certificate(ClientCertFile),
-    ClientCertDetails = erlclu_cert:convert_certificate(ClientCert),
-
-    ClientCaFile = proplists:get_value(cacertfile, ClientOpts),
-    ClientCas = erlclu_cert:read_certificate(ClientCaFile),
-    ClientCaDetails = [erlclu_cert:convert_certificate(Ca) || Ca <- ClientCas],
-
-    ServerOpts = proplists:get_value(server, DistOpts),
-
-    ServerCertFile = proplists:get_value(certfile, ServerOpts),
-    [ServerCert] = erlclu_cert:read_certificate(ServerCertFile),
-    ServerCertDetails = erlclu_cert:convert_certificate(ServerCert),
-
-    ServerCaFile = proplists:get_value(cacertfile, ServerOpts),
-    ServerCas = erlclu_cert:read_certificate(ServerCaFile),
-    ServerCaDetails = [erlclu_cert:convert_certificate(Ca) || Ca <- ServerCas],
+    {ClientCertDetails, ClientCaDetails} = get_certificate_details(client, DistOpts),
+    {ServerCertDetails, ServerCaDetails} = get_certificate_details(server, DistOpts),
 
     Priv = code:priv_dir(?APPLICATION),
     {ok, Template} =
@@ -60,6 +41,19 @@ init(Req0, Opts) ->
         ),
     Req = cowboy_req:reply(200, Headers, Body, Req0),
     {ok, Req, Opts}.
+
+get_certificate_details(Which, DistOpts) when Which =:= client; Which =:= server ->
+    Opts = proplists:get_value(Which, DistOpts),
+
+    CertFile = proplists:get_value(certfile, Opts),
+    [Cert] = erlclu_cert:read_certificate(CertFile),
+    CertDetails = erlclu_cert:convert_certificate(Cert),
+
+    CaFile = proplists:get_value(cacertfile, Opts),
+    Cas = erlclu_cert:read_certificate(CaFile),
+    CaDetails = [erlclu_cert:convert_certificate(Ca) || Ca <- Cas],
+
+    {CertDetails, CaDetails}.
 
 uptime() ->
     UptimeNative = erlang:monotonic_time() - erlang:system_info(start_time),
