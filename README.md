@@ -31,3 +31,9 @@ This project demonstrates the following:
    - `argocd app sync erlang-cluster`
 6. If you've made no changes to the deployment, but you want to roll out a new container image:
    - `kubectl --namespace erlclu rollout restart deployment erlclu`
+
+## Or, in 'dev' mode
+
+1. Hack hack hack.
+2. `make RELEASE_VSN=dev`
+3. `kubectl apply -k k8s/dev && kubectl --namespace erlclu rollout restart deployment erlclu`
