@@ -11,3 +11,7 @@ all:
 
 release:
 	make -C erlclu release
+
+deploy:
+	kubectl apply -k k8s/dev
+	kubectl --namespace erlclu rollout restart deployment erlclu

@@ -35,5 +35,4 @@ This project demonstrates the following:
 ## Or, in 'dev' mode
 
 1. Hack hack hack.
-2. `make RELEASE_VSN=dev`
-3. `kubectl apply -k k8s/dev && kubectl --namespace erlclu rollout restart deployment erlclu`
+2. `make RELEASE_VSN=dev all deploy`
