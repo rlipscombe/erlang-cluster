@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../base
+images:
+  - name: docker.k3s.differentpla.net/erlclu
+    newTag: dev
+  - name: docker.k3s.differentpla.net/erlclu-cert-init
+    newTag: dev
+  - name: docker.k3s.differentpla.net/erlclu-request-cleanup
+    newTag: dev
