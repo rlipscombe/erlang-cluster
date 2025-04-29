@@ -43,7 +43,7 @@ start_http_listener() ->
 start_http_listener(Port) when is_integer(Port) ->
     Dispatch = cowboy_router:compile([
         {'_', [
-            {"/", home_handler, []},
+            {"/", index_handler, []},
             {"/readyz", readyz_handler, []}
         ]}
     ]),
