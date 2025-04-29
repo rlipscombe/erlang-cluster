@@ -27,7 +27,7 @@ spec:
                           - arm64
           containers:
             - name: request-cleanup
-              image: docker.k3s.differentpla.net/erlclu-request-cleanup:0.16.0
+              image: docker.k3s.differentpla.net/erlclu-request-cleanup:0.17.0
               imagePullPolicy: Always
               env:
                 - name: APPLICATION_LABEL
