@@ -12,6 +12,7 @@ spec:
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
+      backoffLimit: 0
       template:
         spec:
           affinity:
@@ -33,6 +34,6 @@ spec:
                   value: erlclu
                 - name: MAX_AGE_MINS
                   value: "15"
-          restartPolicy: OnFailure
+          restartPolicy: Never
           activeDeadlineSeconds: 90
           serviceAccountName: erlclu
